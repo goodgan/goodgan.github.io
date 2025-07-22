@@ -20,7 +20,7 @@ cover_picture: /images/banner.jpg
 
 ## ✨ 关于这个博客
 
-这个博客使用 [Hexo](https://hexo.io/) 构建，部署在 [Gitee Pages](https://gitee.io) 上，主题是优雅的 [MiHo](https://github.com/WongMinHo/hexo-theme-miho)。
+这个博客使用 [Hexo](https://hexo.io/) 构建，部署在 [github Pages](https://github.io) 上，主题是优雅的 [MiHo](https://github.com/WongMinHo/hexo-theme-miho)。
 
 在这里，我会分享：
 
@@ -43,8 +43,8 @@ cover_picture: /images/banner.jpg
 如果你有任何问题、建议或者合作意向，欢迎通过以下方式联系我：
 
 - 📧 邮箱：[1400516909@qq.com](mailto:1400516909@qq.com)
-- 🐙 GitHub：[mrganzhiwei](https://github.com/mrganzhiwei)
-- 🦊 Gitee：[mrgan](https://gitee.com/mrgan)
+- 🐙 GitHub：[goodgan](https://github.com/goodgan)
+- 🦊 Gitee：[mrgan](https://gitee.com/ganzhiwei)
 
 ## 🌈 一些有趣的东西
 

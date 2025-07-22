@@ -42,11 +42,11 @@ menu:
 social:
   home:
     title: 小甘
-    url: //mrganzhiwei.github.io
+    url: //goodgan.github.io
     target: true
   github:
     title: Github
-    url: //github.com/mrganzhiwei
+    url: //github.com/goodgan
     target: true
   weibo:
     title: Weibo

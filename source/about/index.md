@@ -11,9 +11,9 @@ layout: about
 - **姓名**：小甘
 - **职业**：软件开发工程师
 - **邮箱**：1400516909@qq.com
-- **个人网站**：[https://mrgan.gitee.io](https://mrgan.gitee.io)
-- **GitHub**：[https://github.com/mrganzhiwei](https://github.com/mrganzhiwei)
-- **Gitee**：[https://gitee.com/mrgan](https://gitee.com/mrgan)
+- **个人网站**：[https://goodgan.github.io](https://goodgan.github.io)
+- **GitHub**：[https://github.com/goodgan](https://github.com/goodgan)
+- **Gitee**：[https://gitee.com/ganzhiwei](https://gitee.com/ganzhiwei)
 
 ## 专业技能
 
@@ -60,8 +60,8 @@ layout: about
 
 ### 个人博客系统
 - 基于Hexo框架开发的个人博客网站
-- 使用MiHo主题，部署在Gitee Pages上
-- [访问链接](https://mrgan.gitee.io)
+- 使用MiHo主题，部署在GitHub Pages上
+- [访问链接](https://goodgan.github.io)
 
 ### 在线任务管理系统
 - 使用Vue.js和Express.js开发的全栈应用
