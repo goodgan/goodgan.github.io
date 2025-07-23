@@ -30,6 +30,10 @@ menu:
     title: 归档
     url: /archives
     target: false
+  wrench:
+    title: 工具
+    url: /tools
+    target: false
   user:
     title: 关于
     url: /about

@@ -7,7 +7,7 @@ tags:
   - 技术
 categories:
   - 随笔
-cover_picture: /images/banner.jpg
+cover_picture: /images/post2.jpg
 ---
 
 # 👋 你好，世界！

@@ -1,3 +1,15 @@
+---
+title: Git项目连接GitHub远程仓库指南
+date: 2025-07-22 10:00:00
+categories: 技术分享
+tags:
+  - 技术
+  - 工具
+  - Git
+  - GitHub
+thumbnail: /images/post3.jpg
+---
+
 # Git项目连接GitHub远程仓库指南
 
 本文档提供了将本地项目连接到GitHub远程仓库并进行代码提交的通用步骤。
