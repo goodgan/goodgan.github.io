@@ -41,9 +41,9 @@ npm install
 
 ```bash
 cd /path/to/goodgan.github.io  # 进入项目根目录
-hexo clean           # 清除缓存
-hexo generate        # 生成静态文件
-hexo server          # 启动本地服务器
+npx hexo clean           # 清除缓存
+npx hexo generate        # 生成静态文件
+npx hexo server          # 启动本地服务器
 ```
 
 访问 http://localhost:4000 预览网站
