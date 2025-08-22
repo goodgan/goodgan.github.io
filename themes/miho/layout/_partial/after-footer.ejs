@@ -1,5 +1,5 @@
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="<%- url_for('js/vendor/jquery.min.js') %>"></script>
 <script>
   var mihoConfig = {
       root: "<%=config.url%>",
@@ -14,7 +14,7 @@
 <%- js('js/main') %>
 
 <% if (theme.open_bg_particle){ %>
-  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <script src="<%- url_for('js/vendor/particles.min.js') %>"></script>
   <div id="particles"></div>
   <%- js('js/particles') %>
 <% } %>
@@ -41,8 +41,8 @@
 <% } %>
 
 <% if (theme.open_animation){ %>
-  <%- css('//cdn.bootcss.com/animate.css/3.5.0/animate.min.css') %>
-  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <link rel="stylesheet" href="<%- url_for('css/vendor/animate.min.css') %>">
+  <script src="<%- url_for('js/vendor/scrollreveal.min.js') %>"></script>
   <%- js('js/animate') %>
 <% } %>
 <% if (! is_home()){ %>

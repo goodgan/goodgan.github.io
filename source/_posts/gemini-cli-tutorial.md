@@ -92,19 +92,17 @@ npm install -g @google/gemini-cli
 - **Windows (CMD)**:
   ```cmd
   set https_proxy=http://127.0.0.1:10808
-  set http_proxy=http://127.0.0.1:10808
   ```
 
 - **Windows (PowerShell)**:
   ```powershell
   $env:https_proxy="http://127.0.0.1:10808"
-  $env:http_proxy="http://127.0.0.1:10808"
   ```
 
 - **macOS / Linux (Bash/Zsh)**:
   ```bash
   export https_proxy=http://127.0.0.1:10808
-  export http_proxy=http://127.0.0.1:10808
+
   ```
 
 **注意**：请将 `10808` 替换为您的代理软件实际提供的HTTP代理端口。

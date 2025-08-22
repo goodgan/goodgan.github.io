@@ -1,0 +1,12 @@
+网页部分ui 不见了
+控制台报错
+
+
+domain-email-temp-services-guide/:1 Refused to apply style from 'http://localhost:4000/css/vendor/font-awesome.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+domain-email-temp-services-guide/:1 Refused to apply style from 'http://localhost:4000/css/vendor/animate.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+domain-email-temp-services-guide/:809 Refused to apply style from 'http://localhost:4000/css/vendor/animate.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+
+Refused to apply style from 'http://localhost:4000/css/vendor/font-awesome.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+（索引）:1 Refused to apply style from 'http://localhost:4000/css/vendor/animate.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+（索引）:1000 Refused to apply style from 'http://localhost:4000/css/vendor/animate.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+
