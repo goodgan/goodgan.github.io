@@ -51,3 +51,40 @@
      $(".article-entry p img").popImg();
   </script>
 <% } %>
+
+<% if (theme.share && !is_home()){ %>
+  <%- js('js/qrcode.min') %>
+  <script>
+    $(document).ready(function() {
+      // 重写原有的微信分享点击事件，添加二维码生成逻辑
+      $('#wxFab').off('click').on('click', function() {
+        var wxShare = $('#wxShare');
+        var mask = $('.mask');
+        var shareUrl = window.location.href;
+        var qrcodeContainer = document.getElementById('qrcode-container');
+
+        // 显示弹窗
+        wxShare.addClass('in ready');
+        mask.addClass('in');
+
+        // 清空容器并生成二维码
+        qrcodeContainer.innerHTML = '';
+
+        try {
+          new QRCode(qrcodeContainer, {
+            text: shareUrl,
+            width: 200,
+            height: 200,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+          });
+          console.log('QR Code generated successfully for:', shareUrl);
+        } catch (e) {
+          console.error('QR Code generation failed:', e);
+          qrcodeContainer.innerHTML = '<p style="color: #666; text-align: center; padding: 50px;">二维码生成失败<br><small>' + e.message + '</small></p>';
+        }
+      });
+    });
+  </script>
+<% } %>

@@ -48,7 +48,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="<%- 'qrcode' in locals ? qrcode(shareUrl) : '//api.qrserver.com/v1/create-qr-code/?data=' + shareUrl  %>" alt="微信分享二维码">
+    <div id="qrcode-container" style="display: flex; justify-content: center; align-items: center; min-height: 200px;"></div>
 </div>
 
 <div class="mask"></div>
