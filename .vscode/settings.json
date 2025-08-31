@@ -1,0 +1,4 @@
+{
+    "pasteImage.basePath": "${currentFileDir}/md_img",
+    "pasteImage.path": "${currentFileDir}/md_img"
+}
