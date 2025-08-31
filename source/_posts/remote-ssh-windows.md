@@ -26,18 +26,26 @@ cover_picture: /images/remote-ssh.jpg
 
 ### 2. 下载对应版本的 VS Code Server
 
-访问官方下载链接，替换 `${commit_id}` 为实际的 Commit ID：
+**方法一：使用最新稳定版（推荐）**
 
+直接下载最新稳定版，兼容性最好：
 ```
-https://update.code.visualstudio.com/commit:${commit_id}/server-win32-x64/stable
-```
-
-**示例**：
-```
-https://update.code.visualstudio.com/commit:6f1763612105/server-win32-x64/stable
+https://update.code.visualstudio.com/latest/server-win32-x64/stable
 ```
 
-下载得到压缩包 `vscode-server-win32-x64.tar.gz`（约 150MB）。
+**方法二：使用特定 Commit ID（如果需要版本匹配）**
+
+如果需要特定版本，访问以下链接：
+```
+https://update.code.visualstudio.com/commit/${commit_id}/server-win32-x64/stable
+
+```
+
+**注意**：旧的 commit ID 可能已过期无法下载。如果遇到 404 错误，建议：
+1. 使用最新版本（方法一）
+2. 或者更新本地 VS Code 到最新版本，获取新的 commit ID
+
+下载得到压缩包 `vscode-server-win32-x64.zip`（约 150MB）。
 
 ### 3. 将 Server 压缩包传到远程 Windows 主机
 
@@ -45,7 +53,7 @@ https://update.code.visualstudio.com/commit:6f1763612105/server-win32-x64/stable
 
 ```bash
 # 格式：scp -P 端口 本地压缩包路径 远程用户名@远程IP:目标路径
-scp -P 22 C:\Downloads\vscode-server-win32-x64.tar.gz admin@192.168.1.100:C:\Users\admin\
+scp -P 22 C:\Downloads\vscode-server-win32-x64.zip admin@192.168.1.100:C:\Users\admin\
 ```
 
 **方法二：使用 WinSCP**
@@ -63,8 +71,8 @@ cd C:\Users\admin
 # 创建 Server 存放目录（必须严格按照此路径，编辑器会默认读取）
 mkdir -Force .vscode-server\bin\${commit_id}  # 替换 ${commit_id} 为实际版本号
 
-# 解压压缩包到目标目录（--strip-components 1 用于移除外层文件夹）
-tar -zxf vscode-server-win32-x64.tar.gz -C .vscode-server\bin\${commit_id} --strip-components 1
+# 解压 ZIP 文件到目标目录
+Expand-Archive -Path vscode-server-win32-x64.zip -DestinationPath .vscode-server\bin\${commit_id}
 
 # 验证目录结构（应看到 server.js、package.json 等文件）
 ls .vscode-server\bin\${commit_id}
