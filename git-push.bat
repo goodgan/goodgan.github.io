@@ -42,4 +42,36 @@ if %errorlevel% neq 0 (
 )
 
 echo Commit and push completed!
+
+echo.
+echo ========================================
+echo      Deploying to gh-pages branch
+echo ========================================
+
+REM Enter public directory
+cd public
+
+REM Initialize Git repository
+git init
+
+REM Create and switch to gh-pages branch
+git checkout -b gh-pages
+
+REM Add all files
+git add .
+
+REM Commit changes
+git commit -m "Deploy website"
+
+REM Add remote repository
+git remote add origin https://github.com/goodgan/goodgan.github.io.git
+
+REM Force push to gh-pages branch
+git push -f origin gh-pages
+
+REM Return to project root directory
+cd ..
+
+echo.
+echo Deployment to gh-pages completed!
 pause
