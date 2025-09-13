@@ -48,4 +48,27 @@ h1.post-title,
   border-bottom: 1px solid #eee;
   margin-top: 1em;
   margin-bottom: 0.5em;
-} 
+}
+
+/* 首页头像与社交图标下方的快速链接 */
+.home-quick-links {
+  text-align: center;
+  margin: 8px 0 12px;
+  font-size: 14px;
+}
+.home-quick-links .label {
+  color: #666;
+  margin-right: 6px;
+}
+.home-quick-links .quick-link {
+  color: #0aa;
+  text-decoration: none;
+  margin: 0 6px;
+}
+.home-quick-links .quick-link:hover {
+  text-decoration: underline;
+}
+.home-quick-links .sep {
+  color: #bbb;
+  margin: 0 2px;
+}
