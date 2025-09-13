@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Windows远程SSH多客户端连接指南 | 我的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="MinHow,小甘博客" />
+  
+  <meta name="description" content="Windows远程SSH多客户端连接指南手动部署 VS Code Server 到 Windows 远程主机的方案完全适用于多客户端连接（包括 VS Code、Windsurf、Cursor 等编辑器），因为 Server 组件本质是一个独立的后台服务，支持同时接受多个 SSH 客户端的连接请求。以下是具体步骤和多客户端支持说明： 一、手动部署 VS Code Server 到远程 Windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows远程SSH多客户端连接指南">
+<meta property="og:url" content="https://goodgan.github.io/2025/08/31/remote-ssh-windows/index.html">
+<meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="Windows远程SSH多客户端连接指南手动部署 VS Code Server 到 Windows 远程主机的方案完全适用于多客户端连接（包括 VS Code、Windsurf、Cursor 等编辑器），因为 Server 组件本质是一个独立的后台服务，支持同时接受多个 SSH 客户端的连接请求。以下是具体步骤和多客户端支持说明： 一、手动部署 VS Code Server 到远程 Windows">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-08-31T08:45:00.000Z">
+<meta property="article:modified_time" content="2025-08-31T09:47:49.535Z">
+<meta property="article:author" content="mrgan">
+<meta property="article:tag" content="VS Code">
+<meta property="article:tag" content="远程开发">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="多客户端">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/vendor/font-awesome.min.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+  
+
+  
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">小甘博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/tools">
+                        <i class="fa fa-wrench"></i>
+                        <span>AI工具</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h3>
+                        小甘博客
+                    </h3>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        希望你能一直开心快乐！
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="小甘" target="_blank" href="//goodgan.github.io">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/goodgan">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+            <div class="home-quick-links">
+                <span class="label">myproject:</span>
+                <a class="quick-link" href="https://goodgan.github.io/bookmark-site/" target="_blank" rel="noopener">我的书签</a>
+                <span class="sep">·</span>
+                <a class="quick-link" href="https://goodgan.github.io/ai-project-tip/" target="_blank" rel="noopener">AI-项目提示词</a>
+            </div>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-remote-ssh-windows" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Windows远程SSH多客户端连接指南
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/开发工具/">开发工具</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2025-08-31
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="windows远程ssh多客户端连接指南"><a href="#windows远程ssh多客户端连接指南" class="headerlink" title="Windows远程SSH多客户端连接指南"></a>Windows远程SSH多客户端连接指南</h1><p>手动部署 VS Code Server 到 Windows 远程主机的方案完全适用于多客户端连接（包括 VS Code、Windsurf、Cursor 等编辑器），因为 Server 组件本质是一个独立的后台服务，支持同时接受多个 SSH 客户端的连接请求。以下是具体步骤和多客户端支持说明：</p>
+<h3 id="一、手动部署-vs-code-server-到远程-windows-主机"><a href="#一、手动部署-vs-code-server-到远程-windows-主机" class="headerlink" title="一、手动部署 VS Code Server 到远程 Windows 主机"></a>一、手动部署 VS Code Server 到远程 Windows 主机</h3><h3 id="1-确定需要部署的-server-版本"><a href="#1-确定需要部署的-server-版本" class="headerlink" title="1. 确定需要部署的 Server 版本"></a>1. 确定需要部署的 Server 版本</h3><p>不同编辑器（VS Code、Windsurf、Cursor）可能依赖特定版本的 Server，需要与编辑器版本匹配：</p>
+<ul>
+<li><strong>获取 Commit ID</strong>：打开编辑器，按 <code>Ctrl+Shift+P</code> 执行 About 命令，记录「Commit ID」（如 <code>6f1763612105</code>，这是 Server 版本的唯一标识）</li>
+<li><strong>版本统一</strong>：所有需要连接的编辑器，建议统一使用相同版本的 Server（避免版本不兼容）</li>
+</ul>
+<h3 id="2-下载对应版本的-vs-code-server"><a href="#2-下载对应版本的-vs-code-server" class="headerlink" title="2. 下载对应版本的 VS Code Server"></a>2. 下载对应版本的 VS Code Server</h3><p><strong>方法一：使用最新稳定版（推荐）</strong></p>
+<p>直接下载最新稳定版，兼容性最好：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://update.code.visualstudio.com/latest/server-win32-x64/stable</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：使用特定 Commit ID（如果需要版本匹配）</strong></p>
+<p>如果需要特定版本，访问以下链接：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://update.code.visualstudio.com/commit/$&#123;commit_id&#125;/server-win32-x64/stable</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：旧的 commit ID 可能已过期无法下载。如果遇到 404 错误，建议：</p>
+<ol>
+<li>使用最新版本（方法一）</li>
+<li>或者更新本地 VS Code 到最新版本，获取新的 commit ID</li>
+</ol>
+<p>下载得到压缩包 <code>vscode-server-win32-x64.zip</code>（约 150MB）。</p>
+<h3 id="3-将-server-压缩包传到远程-windows-主机"><a href="#3-将-server-压缩包传到远程-windows-主机" class="headerlink" title="3. 将 Server 压缩包传到远程 Windows 主机"></a>3. 将 Server 压缩包传到远程 Windows 主机</h3><p><strong>方法一：使用 scp 命令</strong>（本地终端执行）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式：scp -P 端口 本地压缩包路径 远程用户名@远程IP:目标路径</span></span><br><span class="line">scp -P 22 C:\Downloads\vscode-server-win32-x64.zip admin@192.168.1.100:C:\Users\admin\</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：使用 WinSCP</strong></p>
+<ul>
+<li>连接远程后，直接拖拽压缩包到远程的 <code>C:\Users\admin\</code> 目录</li>
+</ul>
+<h3 id="4-远程-windows-解压并部署-server"><a href="#4-远程-windows-解压并部署-server" class="headerlink" title="4. 远程 Windows 解压并部署 Server"></a>4. 远程 Windows 解压并部署 Server</h3><p>登录远程 Windows 的 PowerShell（管理员模式），执行以下命令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入用户目录</span></span><br><span class="line"><span class="built_in">cd</span> C:\Users\admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 Server 存放目录（必须严格按照此路径，编辑器会默认读取）</span></span><br><span class="line">mkdir <span class="literal">-Force</span> .vscode<span class="literal">-server</span>\bin\<span class="variable">$</span>&#123;commit_id&#125;  <span class="comment"># 替换 $&#123;commit_id&#125; 为实际版本号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压 ZIP 文件到目标目录</span></span><br><span class="line"><span class="built_in">Expand-Archive</span> <span class="literal">-Path</span> vscode<span class="literal">-server-win32-x64</span>.zip <span class="literal">-DestinationPath</span> .vscode<span class="literal">-server</span>\bin\<span class="variable">$</span>&#123;commit_id&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证目录结构（应看到 server.js、package.json 等文件）</span></span><br><span class="line"><span class="built_in">ls</span> .vscode<span class="literal">-server</span>\bin\<span class="variable">$</span>&#123;commit_id&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-配置-server-权限（关键步骤）"><a href="#5-配置-server-权限（关键步骤）" class="headerlink" title="5. 配置 Server 权限（关键步骤）"></a>5. 配置 Server 权限（关键步骤）</h3><p>确保远程 Windows 的 Administrators 组和当前用户对 Server 目录有完全控制权限：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给当前用户添加权限</span></span><br><span class="line">icacls <span class="string">&quot;C:\Users\admin\.vscode-server&quot;</span> /grant <span class="string">&quot;<span class="variable">$</span>&#123;env:USERNAME&#125;:F&quot;</span> /T</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果提示”拒绝访问”</strong>，需在远程 Windows 图形界面操作：</p>
+<ol>
+<li>右键 <code>.vscode-server</code> 目录</li>
+<li>选择「属性」→「安全」→「编辑」</li>
+<li>添加当前用户并勾选”完全控制”</li>
+</ol>
+<h3 id="二、多客户端连接支持说明"><a href="#二、多客户端连接支持说明" class="headerlink" title="二、多客户端连接支持说明"></a>二、多客户端连接支持说明</h3><h3 id="1-支持的客户端类型"><a href="#1-支持的客户端类型" class="headerlink" title="1. 支持的客户端类型"></a>1. 支持的客户端类型</h3><p>手动部署的 VS Code Server 本质是一个基于 SSH 的后台服务，所有兼容 VS Code Remote-SSH 协议的编辑器都可连接，包括：</p>
+<ul>
+<li><strong>VS Code</strong>：官方 Remote-SSH 插件</li>
+<li><strong>Windsurf</strong>：内置 Remote-SSH 功能</li>
+<li><strong>Cursor</strong>：支持 Remote-SSH 扩展</li>
+<li><strong>其他编辑器</strong>：基于 VS Code 内核的编辑器（如 VSCodium）</li>
+</ul>
+<h3 id="2-多客户端同时连接的原理"><a href="#2-多客户端同时连接的原理" class="headerlink" title="2. 多客户端同时连接的原理"></a>2. 多客户端同时连接的原理</h3><ul>
+<li><strong>端口监听</strong>：Server 启动后会监听本地端口（默认随机分配），每个客户端通过 SSH 连接到远程 Windows 后，会通过端口转发与 Server 通信</li>
+<li><strong>并发支持</strong>：Server 支持并发连接，多个客户端可同时编辑远程文件、执行命令（类似 SSH 服务器支持多终端登录）</li>
+</ul>
+<h3 id="3-多客户端连接步骤（以两个客户端为例）"><a href="#3-多客户端连接步骤（以两个客户端为例）" class="headerlink" title="3. 多客户端连接步骤（以两个客户端为例）"></a>3. 多客户端连接步骤（以两个客户端为例）</h3><p><strong>客户端 1：VS Code 连接</strong></p>
+<ol>
+<li>安装 Remote-SSH 插件</li>
+<li>按 <code>Ctrl+Shift+P</code> 执行 <code>Remote-SSH: Connect to Host</code></li>
+<li>输入 <code>admin@192.168.1.100</code>，选择远程文件夹（如 <code>/c/Users/admin/project</code>）</li>
+</ol>
+<p><strong>客户端 2：Windsurf 连接</strong></p>
+<ol>
+<li>打开 Windsurf，左下角点击「远程窗口」图标</li>
+<li>选择「Connect to Host」</li>
+<li>输入相同的远程信息 <code>admin@192.168.1.100</code>，连接后可打开同一项目</li>
+</ol>
+<p><strong>验证并发</strong></p>
+<ul>
+<li>在 VS Code 中修改 <code>test.py</code> 并保存，Windsurf 中会实时显示更新（需开启自动刷新）</li>
+<li>两个客户端的终端均可独立执行远程命令（如 <code>python test.py</code>），互不干扰</li>
+</ul>
+<h3 id="三、常见问题与解决"><a href="#三、常见问题与解决" class="headerlink" title="三、常见问题与解决"></a>三、常见问题与解决</h3><h3 id="1-客户端提示-“server-版本不匹配”"><a href="#1-客户端提示-“server-版本不匹配”" class="headerlink" title="1. 客户端提示 “Server 版本不匹配”"></a>1. 客户端提示 “Server 版本不匹配”</h3><ul>
+<li><strong>原因</strong>：编辑器版本与部署的 Server 版本不一致</li>
+<li><strong>解决</strong>：重新下载对应编辑器 Commit ID 的 Server 并替换部署</li>
+</ul>
+<h3 id="2-多客户端连接后卡顿"><a href="#2-多客户端连接后卡顿" class="headerlink" title="2. 多客户端连接后卡顿"></a>2. 多客户端连接后卡顿</h3><ul>
+<li><strong>原因</strong>：远程 Windows 性能不足（如内存过低）或网络带宽有限</li>
+<li><strong>解决</strong>：关闭远程不必要的进程，或限制同时连接的客户端数量（建议不超过 3-5 个）</li>
+</ul>
+<h3 id="3-部分客户端无法执行命令"><a href="#3-部分客户端无法执行命令" class="headerlink" title="3. 部分客户端无法执行命令"></a>3. 部分客户端无法执行命令</h3><ul>
+<li><strong>原因</strong>：远程用户权限不足（如非管理员用户无法访问某些目录）</li>
+<li><strong>解决</strong>：确保所有客户端使用同一远程用户登录，或给该用户分配足够权限</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>手动部署的 VS Code Server 完全支持多客户端（VS Code、Windsurf、Cursor 等）同时连接，核心是确保：</p>
+<ol>
+<li><strong>版本统一</strong>：所有客户端使用相同版本的 Server（通过 Commit ID 匹配）</li>
+<li><strong>权限正确</strong>：远程 Windows 目录权限正确，允许读写 Server 文件和项目文件</li>
+<li><strong>SSH 服务</strong>：远程 SSH 服务正常运行（支持多会话连接）</li>
+</ol>
+<p>按此方案操作，局域网内的多台设备可通过不同编辑器同时开发远程 Windows 上的项目，兼顾速度与安全性。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2025年08月31日 17:47</p>
+        <p>原始链接： <a class="post-url" href="/2025/08/31/remote-ssh-windows/" title="Windows远程SSH多客户端连接指南">https://goodgan.github.io/2025/08/31/remote-ssh-windows/</a></p>
+        <footer>
+            <a href="https://goodgan.github.io">
+                <img src="/images/logo.png" alt="mrgan">
+                mrgan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://goodgan.github.io/2025/08/31/remote-ssh-windows/&title=《Windows远程SSH多客户端连接指南》 — 我的博客&pic=/images/remote-ssh.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://goodgan.github.io/2025/08/31/remote-ssh-windows/&title=《Windows远程SSH多客户端连接指南》 — 我的博客&source=分享技术与生活" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://goodgan.github.io/2025/08/31/remote-ssh-windows/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Windows远程SSH多客户端连接指南》 — 我的博客&url=https://goodgan.github.io/2025/08/31/remote-ssh-windows/&via=https://goodgan.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://goodgan.github.io/2025/08/31/remote-ssh-windows/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <div id="qrcode-container" style="display: flex; justify-content: center; align-items: center; min-height: 200px;"></div>
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/VSCode/" class="color3">VS Code</a>
+      
+    <a href="/tags/远程开发/" class="color5">远程开发</a>
+      
+    <a href="/tags/SSH/" class="color4">SSH</a>
+      
+    <a href="/tags/Windows/" class="color3">Windows</a>
+      
+    <a href="/tags/多客户端/" class="color5">多客户端</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#windows%E8%BF%9C%E7%A8%8Bssh%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%8C%87%E5%8D%97"><span class="post-toc-text">Windows远程SSH多客户端连接指南</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2-vs-code-server-%E5%88%B0%E8%BF%9C%E7%A8%8B-windows-%E4%B8%BB%E6%9C%BA"><span class="post-toc-text">一、手动部署 VS Code Server 到远程 Windows 主机</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E7%A1%AE%E5%AE%9A%E9%9C%80%E8%A6%81%E9%83%A8%E7%BD%B2%E7%9A%84-server-%E7%89%88%E6%9C%AC"><span class="post-toc-text">1. 确定需要部署的 Server 版本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E4%B8%8B%E8%BD%BD%E5%AF%B9%E5%BA%94%E7%89%88%E6%9C%AC%E7%9A%84-vs-code-server"><span class="post-toc-text">2. 下载对应版本的 VS Code Server</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E5%B0%86-server-%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%BC%A0%E5%88%B0%E8%BF%9C%E7%A8%8B-windows-%E4%B8%BB%E6%9C%BA"><span class="post-toc-text">3. 将 Server 压缩包传到远程 Windows 主机</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-%E8%BF%9C%E7%A8%8B-windows-%E8%A7%A3%E5%8E%8B%E5%B9%B6%E9%83%A8%E7%BD%B2-server"><span class="post-toc-text">4. 远程 Windows 解压并部署 Server</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-%E9%85%8D%E7%BD%AE-server-%E6%9D%83%E9%99%90%EF%BC%88%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="post-toc-text">5. 配置 Server 权限（关键步骤）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%94%AF%E6%8C%81%E8%AF%B4%E6%98%8E"><span class="post-toc-text">二、多客户端连接支持说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E6%94%AF%E6%8C%81%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%B1%BB%E5%9E%8B"><span class="post-toc-text">1. 支持的客户端类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%8C%E6%97%B6%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%8E%9F%E7%90%86"><span class="post-toc-text">2. 多客户端同时连接的原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%AD%A5%E9%AA%A4%EF%BC%88%E4%BB%A5%E4%B8%A4%E4%B8%AA%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="post-toc-text">3. 多客户端连接步骤（以两个客户端为例）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%89%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3"><span class="post-toc-text">三、常见问题与解决</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8F%90%E7%A4%BA-%E2%80%9Cserver-%E7%89%88%E6%9C%AC%E4%B8%8D%E5%8C%B9%E9%85%8D%E2%80%9D"><span class="post-toc-text">1. 客户端提示 “Server 版本不匹配”</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E5%90%8E%E5%8D%A1%E9%A1%BF"><span class="post-toc-text">2. 多客户端连接后卡顿</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E9%83%A8%E5%88%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%97%A0%E6%B3%95%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="post-toc-text">3. 部分客户端无法执行命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%80%BB%E7%BB%93"><span class="post-toc-text">总结</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2025/08/25/frontend-backend-parallel-development/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">前后端并行开发的接口协作详细指南</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2025 mrgan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="/js/vendor/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://goodgan.github.io",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">写作指南</a><a class="category-link" href="/categories/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/">学术工具</a><a class="category-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><a class="category-link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/AI/" style="font-size: 12.5px;">AI</a> <a href="/tags/AI%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">AI编程</a> <a href="/tags/API%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">API服务</a> <a href="/tags/CLI/" style="font-size: 10px;">CLI</a> <a href="/tags/Cloudflare/" style="font-size: 10px;">Cloudflare</a> <a href="/tags/Gemini/" style="font-size: 10px;">Gemini</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 12.5px;">GitHub</a> <a href="/tags/Google-Cloud/" style="font-size: 10px;">Google Cloud</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 10px;">Java Web</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mock%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">Mock数据</a> <a href="/tags/Namesilo/" style="font-size: 10px;">Namesilo</a> <a href="/tags/OpenSSH/" style="font-size: 10px;">OpenSSH</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Spring-Boot/" style="font-size: 12.5px;">Spring Boot</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/Tailscale/" style="font-size: 10px;">Tailscale</a> <a href="/tags/VS-Code/" style="font-size: 15px;">VS Code</a> <a href="/tags/Vue/" style="font-size: 12.5px;">Vue</a> <a href="/tags/Vue-js/" style="font-size: 10px;">Vue.js</a> <a href="/tags/Web%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">Web开发</a> <a href="/tags/Windows/" style="font-size: 12.5px;">Windows</a> <a href="/tags/ZeroTier/" style="font-size: 10px;">ZeroTier</a> <a href="/tags/%E4%B8%B4%E6%97%B6%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">临时服务</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" style="font-size: 10px;">代码规范</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%BE%85%E5%8A%A9/" style="font-size: 10px;">代码辅助</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 10px;">内网穿透</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">写作技巧</a> <a href="/tags/%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">创作</a> <a href="/tags/%E5%88%9B%E6%84%8F%E6%9E%84%E6%80%9D/" style="font-size: 10px;">创意构思</a> <a href="/tags/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/" style="font-size: 12.5px;">前后端分离</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 15px;">前端开发</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 12.5px;">博客</a> <a href="/tags/%E5%8D%A0%E4%BD%8D%E5%9B%BE%E7%89%87/" style="font-size: 10px;">占位图片</a> <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">后端开发</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">团队协作</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 10px;">域名</a> <a href="/tags/%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF/" style="font-size: 10px;">多客户端</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" style="font-size: 17.5px;">学习路线</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">学术工具</a> <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" style="font-size: 10px;">安卓开发</a> <a href="/tags/%E5%B0%8F%E5%9B%A2%E9%98%9F/" style="font-size: 10px;">小团队</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E5%B0%8F%E8%AF%B4%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">小说创作</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">工具</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91/" style="font-size: 10px;">并行开发</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 17.5px;">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 10px;">开发流程</a> <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" style="font-size: 10px;">微信开发</a> <a href="/tags/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91/" style="font-size: 10px;">快速开发</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">接口协作</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">数据分析</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%B7%A5%E7%A8%8B/" style="font-size: 10px;">数据工程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/tags/%E6%B1%82%E8%81%8C%E6%8C%87%E5%8D%97/" style="font-size: 10px;">求职指南</a> <a href="/tags/%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">测试数据</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 10px;">生活</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95/" style="font-size: 10px;">研究方法</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">移动开发</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">编程</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%95%88%E7%8E%87/" style="font-size: 10px;">编程效率</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%96%87%E5%AD%A6/" style="font-size: 10px;">网络文学</a> <a href="/tags/%E8%A7%92%E8%89%B2%E5%A1%91%E9%80%A0/" style="font-size: 10px;">角色塑造</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/" style="font-size: 10px;">论文写作</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E8%B5%84%E6%BA%90/" style="font-size: 10px;">设计资源</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%8F%91/" style="font-size: 15px;">远程开发</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">部署</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 12.5px;">项目管理</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/tools">
+                    <i class="fa fa-wrench"></i><span>AI工具</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/AI/" style="font-size: 12.5px;">AI</a> <a href="/tags/AI%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">AI编程</a> <a href="/tags/API%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">API服务</a> <a href="/tags/CLI/" style="font-size: 10px;">CLI</a> <a href="/tags/Cloudflare/" style="font-size: 10px;">Cloudflare</a> <a href="/tags/Gemini/" style="font-size: 10px;">Gemini</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 12.5px;">GitHub</a> <a href="/tags/Google-Cloud/" style="font-size: 10px;">Google Cloud</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 10px;">Java Web</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mock%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">Mock数据</a> <a href="/tags/Namesilo/" style="font-size: 10px;">Namesilo</a> <a href="/tags/OpenSSH/" style="font-size: 10px;">OpenSSH</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Spring-Boot/" style="font-size: 12.5px;">Spring Boot</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/Tailscale/" style="font-size: 10px;">Tailscale</a> <a href="/tags/VS-Code/" style="font-size: 15px;">VS Code</a> <a href="/tags/Vue/" style="font-size: 12.5px;">Vue</a> <a href="/tags/Vue-js/" style="font-size: 10px;">Vue.js</a> <a href="/tags/Web%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">Web开发</a> <a href="/tags/Windows/" style="font-size: 12.5px;">Windows</a> <a href="/tags/ZeroTier/" style="font-size: 10px;">ZeroTier</a> <a href="/tags/%E4%B8%B4%E6%97%B6%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">临时服务</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" style="font-size: 10px;">代码规范</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%BE%85%E5%8A%A9/" style="font-size: 10px;">代码辅助</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 10px;">内网穿透</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">写作技巧</a> <a href="/tags/%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">创作</a> <a href="/tags/%E5%88%9B%E6%84%8F%E6%9E%84%E6%80%9D/" style="font-size: 10px;">创意构思</a> <a href="/tags/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/" style="font-size: 12.5px;">前后端分离</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 15px;">前端开发</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 12.5px;">博客</a> <a href="/tags/%E5%8D%A0%E4%BD%8D%E5%9B%BE%E7%89%87/" style="font-size: 10px;">占位图片</a> <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">后端开发</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">团队协作</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 10px;">域名</a> <a href="/tags/%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF/" style="font-size: 10px;">多客户端</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" style="font-size: 17.5px;">学习路线</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">学术工具</a> <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" style="font-size: 10px;">安卓开发</a> <a href="/tags/%E5%B0%8F%E5%9B%A2%E9%98%9F/" style="font-size: 10px;">小团队</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E5%B0%8F%E8%AF%B4%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">小说创作</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">工具</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91/" style="font-size: 10px;">并行开发</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 17.5px;">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 10px;">开发流程</a> <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" style="font-size: 10px;">微信开发</a> <a href="/tags/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91/" style="font-size: 10px;">快速开发</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">接口协作</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">数据分析</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%B7%A5%E7%A8%8B/" style="font-size: 10px;">数据工程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/tags/%E6%B1%82%E8%81%8C%E6%8C%87%E5%8D%97/" style="font-size: 10px;">求职指南</a> <a href="/tags/%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">测试数据</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 10px;">生活</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95/" style="font-size: 10px;">研究方法</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">移动开发</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">编程</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%95%88%E7%8E%87/" style="font-size: 10px;">编程效率</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%96%87%E5%AD%A6/" style="font-size: 10px;">网络文学</a> <a href="/tags/%E8%A7%92%E8%89%B2%E5%A1%91%E9%80%A0/" style="font-size: 10px;">角色塑造</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/" style="font-size: 10px;">论文写作</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E8%B5%84%E6%BA%90/" style="font-size: 10px;">设计资源</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%8F%91/" style="font-size: 15px;">远程开发</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">部署</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 12.5px;">项目管理</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+  <script src="/js/vendor/particles.min.js"></script>
+  <div id="particles"></div>
+  
+<script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="/css/vendor/animate.min.css">
+  <script src="/js/vendor/scrollreveal.min.js"></script>
+  
+<script src="/js/animate.js"></script>
+
+
+
+  
+<script src="/js/pop-img.js"></script>
+
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+
+
+  
+<script src="/js/qrcode.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // 重写原有的微信分享点击事件，添加二维码生成逻辑
+      $('#wxFab').off('click').on('click', function() {
+        var wxShare = $('#wxShare');
+        var mask = $('.mask');
+        var shareUrl = window.location.href;
+        var qrcodeContainer = document.getElementById('qrcode-container');
+
+        // 显示弹窗
+        wxShare.addClass('in ready');
+        mask.addClass('in');
+
+        // 清空容器并生成二维码
+        qrcodeContainer.innerHTML = '';
+
+        try {
+          new QRCode(qrcodeContainer, {
+            text: shareUrl,
+            width: 200,
+            height: 200,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+          });
+          console.log('QR Code generated successfully for:', shareUrl);
+        } catch (e) {
+          console.error('QR Code generation failed:', e);
+          qrcodeContainer.innerHTML = '<p style="color: #666; text-align: center; padding: 50px;">二维码生成失败<br><small>' + e.message + '</small></p>';
+        }
+      });
+    });
+  </script>
+
+  </div>
+</body>
+</html>

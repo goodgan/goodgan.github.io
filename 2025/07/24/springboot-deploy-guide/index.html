@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>从零开始：SpringBoot项目服务器部署完全指南 | 我的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="MinHow,小甘博客" />
+  
+  <meta name="description" content="从零开始：SpringBoot项目服务器部署完全指南 本文详细介绍了如何将SpringBoot项目从本地开发环境部署到生产服务器的全过程，包括服务器环境准备、远程连接工具使用、环境安装配置、代码部署及项目运行维护等全方位内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始：SpringBoot项目服务器部署完全指南">
+<meta property="og:url" content="https://goodgan.github.io/2025/07/24/springboot-deploy-guide/index.html">
+<meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="从零开始：SpringBoot项目服务器部署完全指南 本文详细介绍了如何将SpringBoot项目从本地开发环境部署到生产服务器的全过程，包括服务器环境准备、远程连接工具使用、环境安装配置、代码部署及项目运行维护等全方位内容。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-24T02:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-23T06:55:57.068Z">
+<meta property="article:author" content="mrgan">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="服务器">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="部署">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/vendor/font-awesome.min.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+  
+
+  
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">小甘博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/tools">
+                        <i class="fa fa-wrench"></i>
+                        <span>AI工具</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h3>
+                        小甘博客
+                    </h3>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        希望你能一直开心快乐！
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="小甘" target="_blank" href="//goodgan.github.io">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/goodgan">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+            <div class="home-quick-links">
+                <span class="label">myproject:</span>
+                <a class="quick-link" href="https://goodgan.github.io/bookmark-site/" target="_blank" rel="noopener">我的书签</a>
+                <span class="sep">·</span>
+                <a class="quick-link" href="https://goodgan.github.io/ai-project-tip/" target="_blank" rel="noopener">AI-项目提示词</a>
+            </div>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-springboot-deploy-guide" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      从零开始：SpringBoot项目服务器部署完全指南
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/技术分享/">技术分享</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2025-07-24
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="从零开始：springboot项目服务器部署完全指南"><a href="#从零开始：springboot项目服务器部署完全指南" class="headerlink" title="从零开始：SpringBoot项目服务器部署完全指南"></a>从零开始：SpringBoot项目服务器部署完全指南</h1><blockquote>
+<p>本文详细介绍了如何将SpringBoot项目从本地开发环境部署到生产服务器的全过程，包括服务器环境准备、远程连接工具使用、环境安装配置、代码部署及项目运行维护等全方位内容。</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><h3 id="1-服务器选择与购买"><a href="#1-服务器选择与购买" class="headerlink" title="1. 服务器选择与购买"></a>1. 服务器选择与购买</h3><p>选择适合的云服务器提供商：</p>
+<ul>
+<li><strong>国内</strong>：阿里云、腾讯云、华为云</li>
+<li><strong>国外</strong>：AWS、Google Cloud、DigitalOcean</li>
+</ul>
+<p>购买时需要考虑的因素：</p>
+<ul>
+<li><strong>操作系统</strong>：推荐 CentOS 7&#x2F;8 或 Ubuntu 18.04&#x2F;20.04&#x2F;22.04 LTS</li>
+<li><strong>配置</strong>：根据项目需求选择（建议最低 2核4G）</li>
+<li><strong>带宽</strong>：根据访问量决定</li>
+<li><strong>存储</strong>：根据数据量决定（建议最低 40GB SSD）</li>
+</ul>
+<h3 id="2-域名与备案（国内服务器必须）"><a href="#2-域名与备案（国内服务器必须）" class="headerlink" title="2. 域名与备案（国内服务器必须）"></a>2. 域名与备案（国内服务器必须）</h3><ul>
+<li>购买域名（阿里云、腾讯云、GoDaddy 等）</li>
+<li>国内服务器需要进行 ICP 备案</li>
+<li>配置 DNS 解析，将域名指向服务器 IP</li>
+</ul>
+<h3 id="3-本地准备工作"><a href="#3-本地准备工作" class="headerlink" title="3. 本地准备工作"></a>3. 本地准备工作</h3><h4 id="安装远程连接工具"><a href="#安装远程连接工具" class="headerlink" title="安装远程连接工具"></a>安装远程连接工具</h4><p><strong>Windows 平台</strong>：</p>
+<ul>
+<li><strong>Xshell</strong>：SSH 终端模拟器</li>
+<li><strong>Xftp</strong>：SFTP&#x2F;FTP 文件传输工具</li>
+</ul>
+<p><strong>Mac&#x2F;Linux 平台</strong>：</p>
+<ul>
+<li>终端自带 SSH 客户端</li>
+<li><strong>FileZilla</strong>：跨平台 FTP 客户端</li>
+</ul>
+<h4 id="springboot-项目打包"><a href="#springboot-项目打包" class="headerlink" title="SpringBoot 项目打包"></a>SpringBoot 项目打包</h4><p>确保项目可以在本地正常打包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Maven 项目</span></span><br><span class="line">mvn clean package -Dmaven.test.skip=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gradle 项目</span></span><br><span class="line">gradle build -x <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="二、连接与管理服务器"><a href="#二、连接与管理服务器" class="headerlink" title="二、连接与管理服务器"></a>二、连接与管理服务器</h3><h3 id="1-使用-xshell-连接服务器"><a href="#1-使用-xshell-连接服务器" class="headerlink" title="1. 使用 Xshell 连接服务器"></a>1. 使用 Xshell 连接服务器</h3><ol>
+<li><p><strong>打开 Xshell</strong>，点击”新建”按钮</p>
+</li>
+<li><p><strong>配置连接信息</strong>：</p>
+<ul>
+<li>名称：自定义会话名</li>
+<li>协议：SSH</li>
+<li>主机：服务器 IP 地址</li>
+<li>端口：22（默认 SSH 端口）</li>
+<li>用户身份验证：<ul>
+<li>方法：Password</li>
+<li>用户名：root（首次登录）</li>
+<li>密码：服务器密码</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>连接服务器</strong>：点击”确定”后连接</p>
+</li>
+</ol>
+<h3 id="2-使用-xftp-传输文件"><a href="#2-使用-xftp-传输文件" class="headerlink" title="2. 使用 Xftp 传输文件"></a>2. 使用 Xftp 传输文件</h3><ol>
+<li><strong>打开 Xftp</strong>，点击”新建”按钮</li>
+<li><strong>配置连接信息</strong>（同 Xshell）</li>
+<li><strong>连接后操作</strong>：<ul>
+<li>左侧为本地文件</li>
+<li>右侧为服务器文件</li>
+<li>拖拽文件即可传输</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-服务器基础设置"><a href="#3-服务器基础设置" class="headerlink" title="3. 服务器基础设置"></a>3. 服务器基础设置</h3><h4 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建普通用户（安全实践）"><a href="#创建普通用户（安全实践）" class="headerlink" title="创建普通用户（安全实践）"></a>创建普通用户（安全实践）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建用户</span></span><br><span class="line">useradd -m springuser</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置密码</span></span><br><span class="line">passwd springuser</span><br><span class="line"></span><br><span class="line"><span class="comment"># 赋予 sudo 权限</span></span><br><span class="line">usermod -aG wheel springuser  <span class="comment"># CentOS</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">usermod -aG <span class="built_in">sudo</span> springuser   <span class="comment"># Ubuntu</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="更新系统"><a href="#更新系统" class="headerlink" title="更新系统"></a>更新系统</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">yum update -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS 7/8</span></span><br><span class="line"><span class="comment"># 安装防火墙</span></span><br><span class="line">yum install -y firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动防火墙</span></span><br><span class="line">systemctl start firewalld</span><br><span class="line">systemctl <span class="built_in">enable</span> firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开放端口</span></span><br><span class="line">firewall-cmd --permanent --add-port=80/tcp    <span class="comment"># HTTP</span></span><br><span class="line">firewall-cmd --permanent --add-port=443/tcp   <span class="comment"># HTTPS</span></span><br><span class="line">firewall-cmd --permanent --add-port=8080/tcp  <span class="comment"># SpringBoot 默认端口</span></span><br><span class="line">firewall-cmd --permanent --add-port=3306/tcp  <span class="comment"># MySQL</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line"><span class="comment"># 安装防火墙</span></span><br><span class="line">apt install -y ufw</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动防火墙</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开放端口</span></span><br><span class="line">ufw allow 80/tcp    <span class="comment"># HTTP</span></span><br><span class="line">ufw allow 443/tcp   <span class="comment"># HTTPS</span></span><br><span class="line">ufw allow 8080/tcp  <span class="comment"># SpringBoot 默认端口</span></span><br><span class="line">ufw allow 3306/tcp  <span class="comment"># MySQL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="三、安装宝塔面板（可选）"><a href="#三、安装宝塔面板（可选）" class="headerlink" title="三、安装宝塔面板（可选）"></a>三、安装宝塔面板（可选）</h3><p>宝塔面板是一个简化 Linux 服务器管理的可视化工具。</p>
+<h3 id="1-安装宝塔面板"><a href="#1-安装宝塔面板" class="headerlink" title="1. 安装宝塔面板"></a>1. 安装宝塔面板</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">wget -O install.sh http://download.bt.cn/install/install-ubuntu_6.0.sh &amp;&amp; <span class="built_in">sudo</span> bash install.sh</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，会显示以下信息：</p>
+<ul>
+<li>宝塔面板地址</li>
+<li>默认账号密码</li>
+</ul>
+<h3 id="2-宝塔面板基本使用"><a href="#2-宝塔面板基本使用" class="headerlink" title="2. 宝塔面板基本使用"></a>2. 宝塔面板基本使用</h3><ol>
+<li><p><strong>访问面板</strong>：在浏览器中输入面板地址（http:&#x2F;&#x2F;服务器IP:8888）</p>
+</li>
+<li><p><strong>安装推荐软件</strong>：</p>
+<ul>
+<li>Nginx</li>
+<li>MySQL</li>
+<li>Java 项目管理器</li>
+</ul>
+</li>
+<li><p><strong>使用宝塔管理文件</strong>：</p>
+<ul>
+<li>文件 &gt; 根目录 &gt; 上传文件</li>
+</ul>
+</li>
+<li><p><strong>使用宝塔管理数据库</strong>：</p>
+<ul>
+<li>数据库 &gt; 添加数据库</li>
+</ul>
+</li>
+<li><p><strong>使用宝塔配置网站</strong>：</p>
+<ul>
+<li>网站 &gt; 添加站点</li>
+</ul>
+</li>
+</ol>
+<h3 id="四、手动配置服务器环境"><a href="#四、手动配置服务器环境" class="headerlink" title="四、手动配置服务器环境"></a>四、手动配置服务器环境</h3><p>如果不使用宝塔面板，可以按以下步骤手动配置：</p>
+<h3 id="1-安装-jdk"><a href="#1-安装-jdk" class="headerlink" title="1. 安装 JDK"></a>1. 安装 JDK</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">yum install -y java-11-openjdk-devel</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">apt install -y openjdk-11-jdk</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-安装-mysql"><a href="#2-安装-mysql" class="headerlink" title="2. 安装 MySQL"></a>2. 安装 MySQL</h3><h4 id="centos-7-8"><a href="#centos-7-8" class="headerlink" title="CentOS 7&#x2F;8"></a>CentOS 7&#x2F;8</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 MySQL 仓库</span></span><br><span class="line">rpm -ivh https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span><br><span class="line">yum install -y mysql-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 MySQL</span></span><br><span class="line">systemctl start mysqld</span><br><span class="line">systemctl <span class="built_in">enable</span> mysqld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取临时密码</span></span><br><span class="line">grep <span class="string">&quot;temporary password&quot;</span> /var/log/mysqld.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安全配置</span></span><br><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<h4 id="ubuntu"><a href="#ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 MySQL</span></span><br><span class="line">apt install -y mysql-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 MySQL</span></span><br><span class="line">systemctl start mysql</span><br><span class="line">systemctl <span class="built_in">enable</span> mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安全配置</span></span><br><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-创建数据库与用户"><a href="#3-创建数据库与用户" class="headerlink" title="3. 创建数据库与用户"></a>3. 创建数据库与用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 登录 MySQL</span></span><br><span class="line">mysql -u root -p</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数据库</span></span><br><span class="line">CREATE DATABASE springapp CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建用户</span></span><br><span class="line">CREATE USER <span class="string">&#x27;springuser&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;密码&#x27;</span>;</span><br><span class="line">GRANT ALL PRIVILEGES ON springapp.* TO <span class="string">&#x27;springuser&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line">FLUSH PRIVILEGES;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出</span></span><br><span class="line">EXIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-安装-nginx"><a href="#4-安装-nginx" class="headerlink" title="4. 安装 Nginx"></a>4. 安装 Nginx</h3><h4 id="centos-7-8-1"><a href="#centos-7-8-1" class="headerlink" title="CentOS 7&#x2F;8"></a>CentOS 7&#x2F;8</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 EPEL 仓库</span></span><br><span class="line">yum install -y epel-release</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Nginx</span></span><br><span class="line">yum install -y nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 Nginx</span></span><br><span class="line">systemctl start nginx</span><br><span class="line">systemctl <span class="built_in">enable</span> nginx</span><br></pre></td></tr></table></figure>
+
+<h4 id="ubuntu-1"><a href="#ubuntu-1" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Nginx</span></span><br><span class="line">apt install -y nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 Nginx</span></span><br><span class="line">systemctl start nginx</span><br><span class="line">systemctl <span class="built_in">enable</span> nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、部署-springboot-项目"><a href="#五、部署-springboot-项目" class="headerlink" title="五、部署 SpringBoot 项目"></a>五、部署 SpringBoot 项目</h3><h3 id="1-上传项目-jar-包"><a href="#1-上传项目-jar-包" class="headerlink" title="1. 上传项目 JAR 包"></a>1. 上传项目 JAR 包</h3><p>使用 Xftp 将打包好的 JAR 文件上传到服务器，例如：<code>/opt/springapp/app.jar</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建部署目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/springapp</span><br><span class="line"><span class="built_in">chmod</span> 755 /opt/springapp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传 JAR 包后设置权限</span></span><br><span class="line"><span class="built_in">chmod</span> 755 /opt/springapp/app.jar</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建配置文件"><a href="#2-创建配置文件" class="headerlink" title="2. 创建配置文件"></a>2. 创建配置文件</h3><p>在 JAR 包同级目录创建 <code>application-prod.properties</code> 或 <code>application-prod.yml</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例配置（application-prod.properties）</span></span><br><span class="line">vi /opt/springapp/application-prod.properties</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">8080</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://localhost:3306/springapp?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">springuser</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">密码</span></span><br><span class="line"><span class="attr">spring.jpa.hibernate.ddl-auto</span>=<span class="string">update</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 日志配置</span></span><br><span class="line"><span class="attr">logging.file.path</span>=<span class="string">/opt/springapp/logs</span></span><br><span class="line"><span class="attr">logging.level.root</span>=<span class="string">warn</span></span><br><span class="line"><span class="attr">logging.level.com.yourpackage</span>=<span class="string">info</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-创建启动脚本"><a href="#3-创建启动脚本" class="headerlink" title="3. 创建启动脚本"></a>3. 创建启动脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /opt/springapp/start.sh</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">cd</span> /opt/springapp</span><br><span class="line"><span class="built_in">nohup</span> java -jar app.jar --spring.config.location=file:./application-prod.properties &gt; /dev/null 2&gt;&amp;1 &amp;</span><br><span class="line"><span class="built_in">echo</span> $! &gt; app.pid</span><br></pre></td></tr></table></figure>
+
+<p>赋予执行权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x /opt/springapp/start.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-创建停止脚本"><a href="#4-创建停止脚本" class="headerlink" title="4. 创建停止脚本"></a>4. 创建停止脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /opt/springapp/stop.sh</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">PID_FILE=/opt/springapp/app.pid</span><br><span class="line"><span class="keyword">if</span> [ -f <span class="string">&quot;<span class="variable">$PID_FILE</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    PID=$(<span class="built_in">cat</span> <span class="variable">$PID_FILE</span>)</span><br><span class="line">    <span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$PID</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">kill</span> <span class="variable">$PID</span></span><br><span class="line">        <span class="built_in">rm</span> <span class="variable">$PID_FILE</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;Application stopped&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;PID file is empty&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;PID file not found&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>赋予执行权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x /opt/springapp/stop.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-创建重启脚本"><a href="#5-创建重启脚本" class="headerlink" title="5. 创建重启脚本"></a>5. 创建重启脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /opt/springapp/restart.sh</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">/opt/springapp/stop.sh</span><br><span class="line"><span class="built_in">sleep</span> 5</span><br><span class="line">/opt/springapp/start.sh</span><br></pre></td></tr></table></figure>
+
+<p>赋予执行权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x /opt/springapp/restart.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-配置-systemd-服务（推荐）"><a href="#6-配置-systemd-服务（推荐）" class="headerlink" title="6. 配置 Systemd 服务（推荐）"></a>6. 配置 Systemd 服务（推荐）</h3><p>创建服务文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/systemd/system/springapp.service</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Spring Boot Application</span><br><span class="line"><span class="attr">After</span>=syslog.target network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">User</span>=root</span><br><span class="line"><span class="attr">WorkingDirectory</span>=/opt/springapp</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/bin/java -jar /opt/springapp/app.jar --spring.config.location=file:/opt/springapp/application-prod.properties</span><br><span class="line"><span class="attr">ExecStop</span>=/bin/kill -<span class="number">15</span> <span class="variable">$MAINPID</span></span><br><span class="line"><span class="attr">SuccessExitStatus</span>=<span class="number">143</span></span><br><span class="line"><span class="attr">Restart</span>=always</span><br><span class="line"><span class="attr">RestartSec</span>=<span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>启用服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> springapp</span><br><span class="line">systemctl start springapp</span><br></pre></td></tr></table></figure>
+
+<p>管理服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">systemctl status springapp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">systemctl start springapp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止服务</span></span><br><span class="line">systemctl stop springapp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line">systemctl restart springapp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line">journalctl -u springapp -f</span><br></pre></td></tr></table></figure>
+
+<h3 id="六、配置-nginx-反向代理"><a href="#六、配置-nginx-反向代理" class="headerlink" title="六、配置 Nginx 反向代理"></a>六、配置 Nginx 反向代理</h3><h3 id="1-创建-nginx-配置文件"><a href="#1-创建-nginx-配置文件" class="headerlink" title="1. 创建 Nginx 配置文件"></a>1. 创建 Nginx 配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">vi /etc/nginx/conf.d/springapp.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">vi /etc/nginx/sites-available/springapp</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com www.example.com;  <span class="comment"># 替换为你的域名</span></span><br><span class="line">    </span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 静态资源处理</span></span><br><span class="line">    <span class="section">location</span> /static/ &#123;</span><br><span class="line">        <span class="attribute">alias</span> /opt/springapp/static/;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Ubuntu 上创建符号链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 仅 Ubuntu 需要</span></span><br><span class="line"><span class="built_in">ln</span> -s /etc/nginx/sites-available/springapp /etc/nginx/sites-enabled/</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-测试并重启-nginx"><a href="#2-测试并重启-nginx" class="headerlink" title="2. 测试并重启 Nginx"></a>2. 测试并重启 Nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试配置</span></span><br><span class="line">nginx -t</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启 Nginx</span></span><br><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-配置-https（可选但推荐）"><a href="#3-配置-https（可选但推荐）" class="headerlink" title="3. 配置 HTTPS（可选但推荐）"></a>3. 配置 HTTPS（可选但推荐）</h3><p>安装 Certbot：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">yum install -y certbot python3-certbot-nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">apt install -y certbot python3-certbot-nginx</span><br></pre></td></tr></table></figure>
+
+<p>获取并配置 SSL 证书：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certbot --nginx -d example.com -d www.example.com</span><br></pre></td></tr></table></figure>
+
+<p>按照提示完成配置。</p>
+<h3 id="七、数据库迁移和导入"><a href="#七、数据库迁移和导入" class="headerlink" title="七、数据库迁移和导入"></a>七、数据库迁移和导入</h3><h3 id="1-导出本地数据库"><a href="#1-导出本地数据库" class="headerlink" title="1. 导出本地数据库"></a>1. 导出本地数据库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Windows CMD</span></span><br><span class="line">mysqldump -u username -p databasename &gt; backup.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># Linux/Mac Terminal</span></span><br><span class="line">mysqldump -u username -p databasename &gt; backup.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-上传数据库备份文件"><a href="#2-上传数据库备份文件" class="headerlink" title="2. 上传数据库备份文件"></a>2. 上传数据库备份文件</h3><p>使用 Xftp 上传 <code>backup.sql</code> 到服务器。</p>
+<h3 id="3-导入数据库"><a href="#3-导入数据库" class="headerlink" title="3. 导入数据库"></a>3. 导入数据库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u springuser -p springapp &lt; backup.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="八、项目维护与监控"><a href="#八、项目维护与监控" class="headerlink" title="八、项目维护与监控"></a>八、项目维护与监控</h3><h3 id="1-设置日志轮转"><a href="#1-设置日志轮转" class="headerlink" title="1. 设置日志轮转"></a>1. 设置日志轮转</h3><p>创建 logrotate 配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/logrotate.d/springapp</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/opt/springapp/logs/*.log &#123;</span><br><span class="line">    daily</span><br><span class="line">    missingok</span><br><span class="line">    rotate 30</span><br><span class="line">    compress</span><br><span class="line">    delaycompress</span><br><span class="line">    notifempty</span><br><span class="line">    create 0640 root root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-监控-jvm-性能"><a href="#2-监控-jvm-性能" class="headerlink" title="2. 监控 JVM 性能"></a>2. 监控 JVM 性能</h3><p>安装和使用 <code>jstat</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看 GC 统计信息</span></span><br><span class="line">jstat -gc $(pgrep -f app.jar) 5000</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用-prometheus-grafana-监控（可选）"><a href="#3-使用-prometheus-grafana-监控（可选）" class="headerlink" title="3. 使用 Prometheus + Grafana 监控（可选）"></a>3. 使用 Prometheus + Grafana 监控（可选）</h3><p>修改 SpringBoot 项目，添加 Actuator 和 Micrometer 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Maven --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.micrometer<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>micrometer-registry-prometheus<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置 Prometheus 和 Grafana：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 Docker 安装 Prometheus 和 Grafana</span></span><br><span class="line">docker run -d -p 9090:9090 --name prometheus -v /path/to/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</span><br><span class="line">docker run -d -p 3000:3000 --name grafana grafana/grafana</span><br></pre></td></tr></table></figure>
+
+<h3 id="九、自动化部署流程"><a href="#九、自动化部署流程" class="headerlink" title="九、自动化部署流程"></a>九、自动化部署流程</h3><h3 id="1-使用-jenkins（可选）"><a href="#1-使用-jenkins（可选）" class="headerlink" title="1. 使用 Jenkins（可选）"></a>1. 使用 Jenkins（可选）</h3><p>安装 Jenkins：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line"><span class="built_in">sudo</span> wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo</span><br><span class="line"><span class="built_in">sudo</span> rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key</span><br><span class="line"><span class="built_in">sudo</span> yum install -y jenkins java-11-openjdk-devel</span><br><span class="line"><span class="built_in">sudo</span> systemctl start jenkins</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> jenkins</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | <span class="built_in">sudo</span> apt-key add -</span><br><span class="line"><span class="built_in">sudo</span> sh -c <span class="string">&#x27;echo deb https://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install -y jenkins</span><br><span class="line"><span class="built_in">sudo</span> systemctl start jenkins</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> jenkins</span><br></pre></td></tr></table></figure>
+
+<p>访问 <code>http://服务器IP:8080</code> 完成 Jenkins 初始设置。</p>
+<h3 id="2-创建-jenkins-任务"><a href="#2-创建-jenkins-任务" class="headerlink" title="2. 创建 Jenkins 任务"></a>2. 创建 Jenkins 任务</h3><ol>
+<li>创建新任务 &gt; 流水线（Pipeline）</li>
+<li>配置 Git 仓库</li>
+<li>编写 Pipeline 脚本：</li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    </span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(<span class="string">&#x27;Checkout&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                git <span class="string">&#x27;https://github.com/username/repo.git&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">&#x27;Build&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">&#x27;mvn clean package -Dmaven.test.skip=true&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">&#x27;Deploy&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">&#x27;cp target/*.jar /opt/springapp/app.jar&#x27;</span></span><br><span class="line">                sh <span class="string">&#x27;systemctl restart springapp&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-配置-github-webhook"><a href="#3-配置-github-webhook" class="headerlink" title="3. 配置 GitHub Webhook"></a>3. 配置 GitHub Webhook</h3><p>在 GitHub 仓库中添加 Webhook，指向：<code>http://服务器IP:8080/github-webhook/</code></p>
+<h3 id="十、常见问题与排错"><a href="#十、常见问题与排错" class="headerlink" title="十、常见问题与排错"></a>十、常见问题与排错</h3><h3 id="1-应用启动问题"><a href="#1-应用启动问题" class="headerlink" title="1. 应用启动问题"></a>1. 应用启动问题</h3><ul>
+<li><p><strong>查看应用日志</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> -f /opt/springapp/logs/spring.log</span><br><span class="line"><span class="comment"># 或使用 journalctl</span></span><br><span class="line">journalctl -u springapp -f</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检查端口占用</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tulpn | grep 8080</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检查内存和 CPU</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-数据库连接问题"><a href="#2-数据库连接问题" class="headerlink" title="2. 数据库连接问题"></a>2. 数据库连接问题</h3><ul>
+<li><p><strong>测试数据库连接</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u springuser -p springapp -h localhost</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检查数据库服务状态</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysql</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-nginx-配置问题"><a href="#3-nginx-配置问题" class="headerlink" title="3. Nginx 配置问题"></a>3. Nginx 配置问题</h3><ul>
+<li><p><strong>测试 Nginx 配置</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检查 Nginx 错误日志</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> -f /var/log/nginx/error.log</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-防火墙问题"><a href="#4-防火墙问题" class="headerlink" title="4. 防火墙问题"></a>4. 防火墙问题</h3><ul>
+<li><strong>检查防火墙状态</strong>：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">firewall-cmd --list-all</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">ufw status</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="5-内存不足"><a href="#5-内存不足" class="headerlink" title="5. 内存不足"></a>5. 内存不足</h3><ul>
+<li><p><strong>添加交换空间</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建 2GB 交换文件</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/swapfile bs=1M count=2048</span><br><span class="line"><span class="built_in">chmod</span> 600 /swapfile</span><br><span class="line">mkswap /swapfile</span><br><span class="line">swapon /swapfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开机自动启用</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;/swapfile none swap sw 0 0&#x27;</span> | <span class="built_in">tee</span> -a /etc/fstab</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>优化 JVM 参数</strong>：<br>修改启动脚本，添加内存限制：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Xms512m -Xmx1024m -jar app.jar</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="十一、安全最佳实践"><a href="#十一、安全最佳实践" class="headerlink" title="十一、安全最佳实践"></a>十一、安全最佳实践</h3><h3 id="1-定期更新系统"><a href="#1-定期更新系统" class="headerlink" title="1. 定期更新系统"></a>1. 定期更新系统</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">yum update -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">apt update &amp;&amp; apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用-fail2ban-防止暴力破解"><a href="#2-使用-fail2ban-防止暴力破解" class="headerlink" title="2. 使用 fail2ban 防止暴力破解"></a>2. 使用 fail2ban 防止暴力破解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CentOS</span></span><br><span class="line">yum install -y fail2ban</span><br><span class="line">systemctl <span class="built_in">enable</span> fail2ban</span><br><span class="line">systemctl start fail2ban</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu</span></span><br><span class="line">apt install -y fail2ban</span><br><span class="line">systemctl <span class="built_in">enable</span> fail2ban</span><br><span class="line">systemctl start fail2ban</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-禁用-root-ssh-登录"><a href="#3-禁用-root-ssh-登录" class="headerlink" title="3. 禁用 root SSH 登录"></a>3. 禁用 root SSH 登录</h3><p>编辑 SSH 配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>修改配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin no</span><br></pre></td></tr></table></figure>
+
+<p>重启 SSH 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-定期备份数据"><a href="#4-定期备份数据" class="headerlink" title="4. 定期备份数据"></a>4. 定期备份数据</h3><p>创建备份脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /opt/scripts/backup.sh</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DATE=$(<span class="built_in">date</span> +%Y%m%d)</span><br><span class="line">BACKUP_DIR=<span class="string">&quot;/opt/backups&quot;</span></span><br><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$BACKUP_DIR</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份数据库</span></span><br><span class="line">mysqldump -u springuser -p<span class="string">&#x27;密码&#x27;</span> springapp &gt; <span class="variable">$BACKUP_DIR</span>/springapp_<span class="variable">$DATE</span>.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份应用和配置</span></span><br><span class="line">tar -zcf <span class="variable">$BACKUP_DIR</span>/springapp_files_<span class="variable">$DATE</span>.tar.gz /opt/springapp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保留30天的备份</span></span><br><span class="line">find <span class="variable">$BACKUP_DIR</span> -name <span class="string">&quot;*.sql&quot;</span> -mtime +30 -delete</span><br><span class="line">find <span class="variable">$BACKUP_DIR</span> -name <span class="string">&quot;*.tar.gz&quot;</span> -mtime +30 -delete</span><br></pre></td></tr></table></figure>
+
+<p>设置执行权限并添加定时任务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x /opt/scripts/backup.sh</span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+
+<p>添加定时任务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 2 * * * /opt/scripts/backup.sh &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://spring.io/projects/spring-boot">Spring Boot 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/">MySQL 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://nginx.org/en/docs/">Nginx 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bt.cn/">宝塔面板官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jenkins.io/doc/">Jenkins 官方文档</a></li>
+</ul>
+<hr>
+<p>本指南详细介绍了从零开始将 SpringBoot 项目部署到服务器的完整流程。无论你是初学者还是有经验的开发者，按照这些步骤，都能成功搭建一个稳定、安全、高效的生产环境。如有疑问，欢迎在评论区留言交流！</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2025年07月23日 14:55</p>
+        <p>原始链接： <a class="post-url" href="/2025/07/24/springboot-deploy-guide/" title="从零开始：SpringBoot项目服务器部署完全指南">https://goodgan.github.io/2025/07/24/springboot-deploy-guide/</a></p>
+        <footer>
+            <a href="https://goodgan.github.io">
+                <img src="/images/logo.png" alt="mrgan">
+                mrgan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://goodgan.github.io/2025/07/24/springboot-deploy-guide/&title=《从零开始：SpringBoot项目服务器部署完全指南》 — 我的博客&pic=/images/post2.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://goodgan.github.io/2025/07/24/springboot-deploy-guide/&title=《从零开始：SpringBoot项目服务器部署完全指南》 — 我的博客&source=从零开始：SpringBoot项目服务器部署完全指南
+本文详细介绍了如何将SpringBoot项目从本地开发环境部署到生产服务器的全过程，包括服务器环境准..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://goodgan.github.io/2025/07/24/springboot-deploy-guide/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《从零开始：SpringBoot项目服务器部署完全指南》 — 我的博客&url=https://goodgan.github.io/2025/07/24/springboot-deploy-guide/&via=https://goodgan.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://goodgan.github.io/2025/07/24/springboot-deploy-guide/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <div id="qrcode-container" style="display: flex; justify-content: center; align-items: center; min-height: 200px;"></div>
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/技术/" class="color3">技术</a>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+    <a href="/tags/服务器/" class="color4">服务器</a>
+      
+    <a href="/tags/Linux/" class="color1">Linux</a>
+      
+    <a href="/tags/部署/" class="color3">部署</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%9Aspringboot%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97"><span class="post-toc-text">从零开始：SpringBoot项目服务器部署完全指南</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="post-toc-text">一、准备工作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%89%E6%8B%A9%E4%B8%8E%E8%B4%AD%E4%B9%B0"><span class="post-toc-text">1. 服务器选择与购买</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E5%9F%9F%E5%90%8D%E4%B8%8E%E5%A4%87%E6%A1%88%EF%BC%88%E5%9B%BD%E5%86%85%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BF%85%E9%A1%BB%EF%BC%89"><span class="post-toc-text">2. 域名与备案（国内服务器必须）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E6%9C%AC%E5%9C%B0%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="post-toc-text">3. 本地准备工作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E5%B7%A5%E5%85%B7"><span class="post-toc-text">安装远程连接工具</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#springboot-%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85"><span class="post-toc-text">SpringBoot 项目打包</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="post-toc-text">二、连接与管理服务器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E4%BD%BF%E7%94%A8-xshell-%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="post-toc-text">1. 使用 Xshell 连接服务器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E4%BD%BF%E7%94%A8-xftp-%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6"><span class="post-toc-text">2. 使用 Xftp 传输文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%BA%E7%A1%80%E8%AE%BE%E7%BD%AE"><span class="post-toc-text">3. 服务器基础设置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="post-toc-text">修改密码</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E5%88%9B%E5%BB%BA%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%EF%BC%88%E5%AE%89%E5%85%A8%E5%AE%9E%E8%B7%B5%EF%BC%89"><span class="post-toc-text">创建普通用户（安全实践）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F"><span class="post-toc-text">更新系统</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99"><span class="post-toc-text">配置防火墙</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="post-toc-text">三、安装宝塔面板（可选）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E5%AE%89%E8%A3%85%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF"><span class="post-toc-text">1. 安装宝塔面板</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="post-toc-text">2. 宝塔面板基本使用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%9B%9B%E3%80%81%E6%89%8B%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83"><span class="post-toc-text">四、手动配置服务器环境</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E5%AE%89%E8%A3%85-jdk"><span class="post-toc-text">1. 安装 JDK</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E5%AE%89%E8%A3%85-mysql"><span class="post-toc-text">2. 安装 MySQL</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#centos-7-8"><span class="post-toc-text">CentOS 7&#x2F;8</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ubuntu"><span class="post-toc-text">Ubuntu</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%94%A8%E6%88%B7"><span class="post-toc-text">3. 创建数据库与用户</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-%E5%AE%89%E8%A3%85-nginx"><span class="post-toc-text">4. 安装 Nginx</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#centos-7-8-1"><span class="post-toc-text">CentOS 7&#x2F;8</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ubuntu-1"><span class="post-toc-text">Ubuntu</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%BA%94%E3%80%81%E9%83%A8%E7%BD%B2-springboot-%E9%A1%B9%E7%9B%AE"><span class="post-toc-text">五、部署 SpringBoot 项目</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE-jar-%E5%8C%85"><span class="post-toc-text">1. 上传项目 JAR 包</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="post-toc-text">2. 创建配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E5%88%9B%E5%BB%BA%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="post-toc-text">3. 创建启动脚本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-%E5%88%9B%E5%BB%BA%E5%81%9C%E6%AD%A2%E8%84%9A%E6%9C%AC"><span class="post-toc-text">4. 创建停止脚本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-%E5%88%9B%E5%BB%BA%E9%87%8D%E5%90%AF%E8%84%9A%E6%9C%AC"><span class="post-toc-text">5. 创建重启脚本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-%E9%85%8D%E7%BD%AE-systemd-%E6%9C%8D%E5%8A%A1%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="post-toc-text">6. 配置 Systemd 服务（推荐）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%85%AD%E3%80%81%E9%85%8D%E7%BD%AE-nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="post-toc-text">六、配置 Nginx 反向代理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E5%88%9B%E5%BB%BA-nginx-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="post-toc-text">1. 创建 Nginx 配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E6%B5%8B%E8%AF%95%E5%B9%B6%E9%87%8D%E5%90%AF-nginx"><span class="post-toc-text">2. 测试并重启 Nginx</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E9%85%8D%E7%BD%AE-https%EF%BC%88%E5%8F%AF%E9%80%89%E4%BD%86%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="post-toc-text">3. 配置 HTTPS（可选但推荐）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%83%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB%E5%92%8C%E5%AF%BC%E5%85%A5"><span class="post-toc-text">七、数据库迁移和导入</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E5%AF%BC%E5%87%BA%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="post-toc-text">1. 导出本地数据库</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E4%B8%8A%E4%BC%A0%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6"><span class="post-toc-text">2. 上传数据库备份文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="post-toc-text">3. 导入数据库</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%85%AB%E3%80%81%E9%A1%B9%E7%9B%AE%E7%BB%B4%E6%8A%A4%E4%B8%8E%E7%9B%91%E6%8E%A7"><span class="post-toc-text">八、项目维护与监控</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E8%AE%BE%E7%BD%AE%E6%97%A5%E5%BF%97%E8%BD%AE%E8%BD%AC"><span class="post-toc-text">1. 设置日志轮转</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E7%9B%91%E6%8E%A7-jvm-%E6%80%A7%E8%83%BD"><span class="post-toc-text">2. 监控 JVM 性能</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E4%BD%BF%E7%94%A8-prometheus-grafana-%E7%9B%91%E6%8E%A7%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="post-toc-text">3. 使用 Prometheus + Grafana 监控（可选）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B9%9D%E3%80%81%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B"><span class="post-toc-text">九、自动化部署流程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E4%BD%BF%E7%94%A8-jenkins%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="post-toc-text">1. 使用 Jenkins（可选）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E5%88%9B%E5%BB%BA-jenkins-%E4%BB%BB%E5%8A%A1"><span class="post-toc-text">2. 创建 Jenkins 任务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E9%85%8D%E7%BD%AE-github-webhook"><span class="post-toc-text">3. 配置 GitHub Webhook</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%8D%81%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%8E%92%E9%94%99"><span class="post-toc-text">十、常见问题与排错</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98"><span class="post-toc-text">1. 应用启动问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98"><span class="post-toc-text">2. 数据库连接问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-nginx-%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="post-toc-text">3. Nginx 配置问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-%E9%98%B2%E7%81%AB%E5%A2%99%E9%97%AE%E9%A2%98"><span class="post-toc-text">4. 防火墙问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-%E5%86%85%E5%AD%98%E4%B8%8D%E8%B6%B3"><span class="post-toc-text">5. 内存不足</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%AE%89%E5%85%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="post-toc-text">十一、安全最佳实践</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F"><span class="post-toc-text">1. 定期更新系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-%E4%BD%BF%E7%94%A8-fail2ban-%E9%98%B2%E6%AD%A2%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3"><span class="post-toc-text">2. 使用 fail2ban 防止暴力破解</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-%E7%A6%81%E7%94%A8-root-ssh-%E7%99%BB%E5%BD%95"><span class="post-toc-text">3. 禁用 root SSH 登录</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-%E5%AE%9A%E6%9C%9F%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE"><span class="post-toc-text">4. 定期备份数据</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90"><span class="post-toc-text">参考资源</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2025/07/25/java-study/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Java后端开发学习路线完全指南
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2025/07/23/hexo-deploy-guide/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Hexo部署个人网站到GitHub详细教程</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2025 mrgan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="/js/vendor/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://goodgan.github.io",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">写作指南</a><a class="category-link" href="/categories/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/">学术工具</a><a class="category-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><a class="category-link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/AI/" style="font-size: 12.5px;">AI</a> <a href="/tags/AI%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">AI编程</a> <a href="/tags/API%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">API服务</a> <a href="/tags/CLI/" style="font-size: 10px;">CLI</a> <a href="/tags/Cloudflare/" style="font-size: 10px;">Cloudflare</a> <a href="/tags/Gemini/" style="font-size: 10px;">Gemini</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 12.5px;">GitHub</a> <a href="/tags/Google-Cloud/" style="font-size: 10px;">Google Cloud</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 10px;">Java Web</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mock%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">Mock数据</a> <a href="/tags/Namesilo/" style="font-size: 10px;">Namesilo</a> <a href="/tags/OpenSSH/" style="font-size: 10px;">OpenSSH</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Spring-Boot/" style="font-size: 12.5px;">Spring Boot</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/Tailscale/" style="font-size: 10px;">Tailscale</a> <a href="/tags/VS-Code/" style="font-size: 15px;">VS Code</a> <a href="/tags/Vue/" style="font-size: 12.5px;">Vue</a> <a href="/tags/Vue-js/" style="font-size: 10px;">Vue.js</a> <a href="/tags/Web%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">Web开发</a> <a href="/tags/Windows/" style="font-size: 12.5px;">Windows</a> <a href="/tags/ZeroTier/" style="font-size: 10px;">ZeroTier</a> <a href="/tags/%E4%B8%B4%E6%97%B6%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">临时服务</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" style="font-size: 10px;">代码规范</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%BE%85%E5%8A%A9/" style="font-size: 10px;">代码辅助</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 10px;">内网穿透</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">写作技巧</a> <a href="/tags/%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">创作</a> <a href="/tags/%E5%88%9B%E6%84%8F%E6%9E%84%E6%80%9D/" style="font-size: 10px;">创意构思</a> <a href="/tags/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/" style="font-size: 12.5px;">前后端分离</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 15px;">前端开发</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 12.5px;">博客</a> <a href="/tags/%E5%8D%A0%E4%BD%8D%E5%9B%BE%E7%89%87/" style="font-size: 10px;">占位图片</a> <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">后端开发</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">团队协作</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 10px;">域名</a> <a href="/tags/%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF/" style="font-size: 10px;">多客户端</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" style="font-size: 17.5px;">学习路线</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">学术工具</a> <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" style="font-size: 10px;">安卓开发</a> <a href="/tags/%E5%B0%8F%E5%9B%A2%E9%98%9F/" style="font-size: 10px;">小团队</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E5%B0%8F%E8%AF%B4%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">小说创作</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">工具</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91/" style="font-size: 10px;">并行开发</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 17.5px;">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 10px;">开发流程</a> <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" style="font-size: 10px;">微信开发</a> <a href="/tags/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91/" style="font-size: 10px;">快速开发</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">接口协作</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">数据分析</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%B7%A5%E7%A8%8B/" style="font-size: 10px;">数据工程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/tags/%E6%B1%82%E8%81%8C%E6%8C%87%E5%8D%97/" style="font-size: 10px;">求职指南</a> <a href="/tags/%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">测试数据</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 10px;">生活</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95/" style="font-size: 10px;">研究方法</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">移动开发</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">编程</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%95%88%E7%8E%87/" style="font-size: 10px;">编程效率</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%96%87%E5%AD%A6/" style="font-size: 10px;">网络文学</a> <a href="/tags/%E8%A7%92%E8%89%B2%E5%A1%91%E9%80%A0/" style="font-size: 10px;">角色塑造</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/" style="font-size: 10px;">论文写作</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E8%B5%84%E6%BA%90/" style="font-size: 10px;">设计资源</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%8F%91/" style="font-size: 15px;">远程开发</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">部署</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 12.5px;">项目管理</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/tools">
+                    <i class="fa fa-wrench"></i><span>AI工具</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/AI/" style="font-size: 12.5px;">AI</a> <a href="/tags/AI%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">AI编程</a> <a href="/tags/API%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">API服务</a> <a href="/tags/CLI/" style="font-size: 10px;">CLI</a> <a href="/tags/Cloudflare/" style="font-size: 10px;">Cloudflare</a> <a href="/tags/Gemini/" style="font-size: 10px;">Gemini</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 12.5px;">GitHub</a> <a href="/tags/Google-Cloud/" style="font-size: 10px;">Google Cloud</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 10px;">Java Web</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mock%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">Mock数据</a> <a href="/tags/Namesilo/" style="font-size: 10px;">Namesilo</a> <a href="/tags/OpenSSH/" style="font-size: 10px;">OpenSSH</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Spring-Boot/" style="font-size: 12.5px;">Spring Boot</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/Tailscale/" style="font-size: 10px;">Tailscale</a> <a href="/tags/VS-Code/" style="font-size: 15px;">VS Code</a> <a href="/tags/Vue/" style="font-size: 12.5px;">Vue</a> <a href="/tags/Vue-js/" style="font-size: 10px;">Vue.js</a> <a href="/tags/Web%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">Web开发</a> <a href="/tags/Windows/" style="font-size: 12.5px;">Windows</a> <a href="/tags/ZeroTier/" style="font-size: 10px;">ZeroTier</a> <a href="/tags/%E4%B8%B4%E6%97%B6%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">临时服务</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" style="font-size: 10px;">代码规范</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%BE%85%E5%8A%A9/" style="font-size: 10px;">代码辅助</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 10px;">内网穿透</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">写作技巧</a> <a href="/tags/%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">创作</a> <a href="/tags/%E5%88%9B%E6%84%8F%E6%9E%84%E6%80%9D/" style="font-size: 10px;">创意构思</a> <a href="/tags/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/" style="font-size: 12.5px;">前后端分离</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 15px;">前端开发</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 12.5px;">博客</a> <a href="/tags/%E5%8D%A0%E4%BD%8D%E5%9B%BE%E7%89%87/" style="font-size: 10px;">占位图片</a> <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">后端开发</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">团队协作</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 10px;">域名</a> <a href="/tags/%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF/" style="font-size: 10px;">多客户端</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" style="font-size: 17.5px;">学习路线</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">学术工具</a> <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" style="font-size: 10px;">安卓开发</a> <a href="/tags/%E5%B0%8F%E5%9B%A2%E9%98%9F/" style="font-size: 10px;">小团队</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E5%B0%8F%E8%AF%B4%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">小说创作</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">工具</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91/" style="font-size: 10px;">并行开发</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 17.5px;">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 10px;">开发流程</a> <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" style="font-size: 10px;">微信开发</a> <a href="/tags/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91/" style="font-size: 10px;">快速开发</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">接口协作</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">数据分析</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%B7%A5%E7%A8%8B/" style="font-size: 10px;">数据工程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/tags/%E6%B1%82%E8%81%8C%E6%8C%87%E5%8D%97/" style="font-size: 10px;">求职指南</a> <a href="/tags/%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">测试数据</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 10px;">生活</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95/" style="font-size: 10px;">研究方法</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" style="font-size: 12.5px;">移动开发</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">编程</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%95%88%E7%8E%87/" style="font-size: 10px;">编程效率</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%96%87%E5%AD%A6/" style="font-size: 10px;">网络文学</a> <a href="/tags/%E8%A7%92%E8%89%B2%E5%A1%91%E9%80%A0/" style="font-size: 10px;">角色塑造</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/" style="font-size: 10px;">论文写作</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E8%B5%84%E6%BA%90/" style="font-size: 10px;">设计资源</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%8F%91/" style="font-size: 15px;">远程开发</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">部署</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 12.5px;">项目管理</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+  <script src="/js/vendor/particles.min.js"></script>
+  <div id="particles"></div>
+  
+<script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="/css/vendor/animate.min.css">
+  <script src="/js/vendor/scrollreveal.min.js"></script>
+  
+<script src="/js/animate.js"></script>
+
+
+
+  
+<script src="/js/pop-img.js"></script>
+
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+
+
+  
+<script src="/js/qrcode.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // 重写原有的微信分享点击事件，添加二维码生成逻辑
+      $('#wxFab').off('click').on('click', function() {
+        var wxShare = $('#wxShare');
+        var mask = $('.mask');
+        var shareUrl = window.location.href;
+        var qrcodeContainer = document.getElementById('qrcode-container');
+
+        // 显示弹窗
+        wxShare.addClass('in ready');
+        mask.addClass('in');
+
+        // 清空容器并生成二维码
+        qrcodeContainer.innerHTML = '';
+
+        try {
+          new QRCode(qrcodeContainer, {
+            text: shareUrl,
+            width: 200,
+            height: 200,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+          });
+          console.log('QR Code generated successfully for:', shareUrl);
+        } catch (e) {
+          console.error('QR Code generation failed:', e);
+          qrcodeContainer.innerHTML = '<p style="color: #666; text-align: center; padding: 50px;">二维码生成失败<br><small>' + e.message + '</small></p>';
+        }
+      });
+    });
+  </script>
+
+  </div>
+</body>
+</html>
