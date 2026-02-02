@@ -7,7 +7,8 @@
       "Bash(npx hexo clean)",
       "Bash(netstat:*)",
       "Bash(findstr :4000)",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "mcp__MiniMax__understand_image"
     ]
   }
 }

@@ -1,5 +1,5 @@
 ---
-title: 国内安装配置 Claude Code + MiniMax M2.1 完整教程
+title: 国内安装配置 Claude Code + MiniMax M2.1 API教程
 date: 2026-02-03 12:00:00
 categories: 开发工具
 tags:
@@ -11,7 +11,7 @@ tags:
 cover_picture: https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80
 ---
 
-# 国内安装配置 Claude Code + MiniMax M2.1 完整教程
+# 国内安装配置 Claude Code + MiniMax M2.1 API教程
 
 本教程严格对照 **Claude Code 官方文档**、**MiniMax 官方文档**、**CC Switch 官方文档**编写，适配 Windows/macOS/Linux 全系统，全程国内网络可完成，无需任何代理。
 
