@@ -5,7 +5,7 @@ categories: 开发工具
 tags:
   - Claude Code
   - AI编程
-  - MiniMax
+  - MiniMax M2.1
   - MCP
   - 开发工具
 cover_picture: https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80
