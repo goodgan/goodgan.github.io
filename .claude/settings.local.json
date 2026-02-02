@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx hexo server)",
+      "mcp__MiniMax__web_search",
+      "WebFetch(domain:platform.minimaxi.com)",
+      "Bash(npx hexo clean)",
+      "Bash(netstat:*)",
+      "Bash(findstr :4000)",
+      "Bash(powershell -Command:*)"
+    ]
+  }
+}
