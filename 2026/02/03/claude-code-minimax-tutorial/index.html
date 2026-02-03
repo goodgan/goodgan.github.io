@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>无需代理安装配置 Claude Code + MiniMax M2.1 API教程 | 我的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="MinHow,小甘博客" />
+  
+  <meta name="description" content="国内安装配置 Claude Code + MiniMax M2.1 API教程本教程介绍如何在国内环境安装配置 Claude Code + MiniMax M2.1，全程无需代理。 一、环境准备1.1 Node.js 18+Claude Code 官方依赖，通过国内镜像安装。  下载地址：https:&#x2F;&#x2F;nodejs.org&#x2F;zh-cn&#x2F;download&#x2F; 验证：node -v &#x2F; np">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无需代理安装配置 Claude Code + MiniMax M2.1 API教程">
+<meta property="og:url" content="https://goodgan.github.io/2026/02/03/claude-code-minimax-tutorial/index.html">
+<meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="国内安装配置 Claude Code + MiniMax M2.1 API教程本教程介绍如何在国内环境安装配置 Claude Code + MiniMax M2.1，全程无需代理。 一、环境准备1.1 Node.js 18+Claude Code 官方依赖，通过国内镜像安装。  下载地址：https:&#x2F;&#x2F;nodejs.org&#x2F;zh-cn&#x2F;download&#x2F; 验证：node -v &#x2F; np">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-03T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-03T07:29:57.383Z">
+<meta property="article:author" content="mrgan">
+<meta property="article:tag" content="AI编程">
+<meta property="article:tag" content="开发工具">
+<meta property="article:tag" content="Claude Code">
+<meta property="article:tag" content="MiniMax M2.1">
+<meta property="article:tag" content="MCP">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/vendor/font-awesome.min.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+  
+
+  
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">小甘博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/tools">
+                        <i class="fa fa-wrench"></i>
+                        <span>AI工具</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h3>
+                        小甘博客
+                    </h3>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        希望你能一直开心快乐！
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="小甘" target="_blank" href="//goodgan.github.io">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/goodgan">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-claude-code-minimax-tutorial" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      无需代理安装配置 Claude Code + MiniMax M2.1 API教程
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/开发工具/">开发工具</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2026-02-03
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="国内安装配置-claude-code-minimax-m2-1-api教程"><a href="#国内安装配置-claude-code-minimax-m2-1-api教程" class="headerlink" title="国内安装配置 Claude Code + MiniMax M2.1 API教程"></a>国内安装配置 Claude Code + MiniMax M2.1 API教程</h1><p>本教程介绍如何在国内环境安装配置 Claude Code + MiniMax M2.1，全程无需代理。</p>
+<h3 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h3><h3 id="1-1-node-js-18"><a href="#1-1-node-js-18" class="headerlink" title="1.1 Node.js 18+"></a>1.1 Node.js 18+</h3><p>Claude Code 官方依赖，通过国内镜像安装。</p>
+<ul>
+<li><strong>下载地址</strong>：<a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/download/">https://nodejs.org/zh-cn/download/</a></li>
+<li><strong>验证</strong>：<code>node -v</code> &#x2F; <code>npm -v</code></li>
+</ul>
+<h3 id="1-2-minimax-coding-plan-api-密钥"><a href="#1-2-minimax-coding-plan-api-密钥" class="headerlink" title="1.2 MiniMax Coding Plan API 密钥"></a>1.2 MiniMax Coding Plan API 密钥</h3><ol>
+<li>访问 <a target="_blank" rel="noopener" href="https://platform.minimaxi.com/">https://platform.minimaxi.com/</a> 注册&#x2F;登录</li>
+<li>进入「控制台」→「API 密钥」→「创建新密钥」</li>
+<li><strong>必须选择”Coding Plan”类型</strong>（普通对话密钥无效）</li>
+</ol>
+<blockquote>
+<p>详细步骤参考官方文档：<a target="_blank" rel="noopener" href="https://platform.minimaxi.com/docs/coding-plan/intro">https://platform.minimaxi.com/docs/coding-plan/intro</a></p>
+</blockquote>
+<h3 id="二、安装-claude-code"><a href="#二、安装-claude-code" class="headerlink" title="二、安装 Claude Code"></a>二、安装 Claude Code</h3><p>使用阿里 npm 镜像安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>官方安装文档：<a target="_blank" rel="noopener" href="https://docs.anthropic.com/zh-CN/docs/claude-code/overview">https://docs.anthropic.com/zh-CN/docs/claude-code/overview</a></p>
+</blockquote>
+<h3 id="三、配置-minimax-api"><a href="#三、配置-minimax-api" class="headerlink" title="三、配置 MiniMax API"></a>三、配置 MiniMax API</h3><h3 id="方式-1：cc-switch-可视化配置（推荐）"><a href="#方式-1：cc-switch-可视化配置（推荐）" class="headerlink" title="方式 1：CC Switch 可视化配置（推荐）"></a>方式 1：CC Switch 可视化配置（推荐）</h3><ol>
+<li>下载 CC Switch：<a target="_blank" rel="noopener" href="https://github.com/farion1231/cc-switch/releases">https://github.com/farion1231/cc-switch/releases</a></li>
+<li>启动 CC Switch，点击右上角「+」添加 MiniMax 供应商</li>
+<li>填写 API Key，模型名称设为 <code>MiniMax-M2.1</code></li>
+<li>点击「启用」</li>
+</ol>
+<h3 id="方式-2：手动编辑配置文件"><a href="#方式-2：手动编辑配置文件" class="headerlink" title="方式 2：手动编辑配置文件"></a>方式 2：手动编辑配置文件</h3><p>编辑 <code>~/.claude/settings.json</code>（Windows：<code>%USERPROFILE%\.claude\settings.json</code>）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_BASE_URL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://api.minimaxi.com/anthropic&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_AUTH_TOKEN&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的MiniMax-CodingPlan-API密钥&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_MODEL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;MiniMax-M2.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_DEFAULT_SONNET_MODEL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;MiniMax-M2.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_DEFAULT_OPUS_MODEL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;MiniMax-M2.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_DEFAULT_HAIKU_MODEL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;MiniMax-M2.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;API_TIMEOUT_MS&quot;</span><span class="punctuation">:</span> <span class="string">&quot;300000&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;includeCoAuthoredBy&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>编辑 <code>~/.claude.json</code> 添加：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;hasCompletedOnboarding&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>官方配置指南：<a target="_blank" rel="noopener" href="https://platform.minimaxi.com/docs/coding-plan/claude-code">https://platform.minimaxi.com/docs/coding-plan/claude-code</a></p>
+</blockquote>
+<h3 id="四、mcp-配置"><a href="#四、mcp-配置" class="headerlink" title="四、MCP 配置"></a>四、MCP 配置</h3><p>参考 MiniMax 官方 MCP 文档：<a target="_blank" rel="noopener" href="https://platform.minimaxi.com/docs/coding-plan/mcp-guide">https://platform.minimaxi.com/docs/coding-plan/mcp-guide</a></p>
+<p>重要：配置MCP后 minimax m2.1 才具备图片理解和网络搜索功能。</p>
+<h3 id="五、vs-code-插件"><a href="#五、vs-code-插件" class="headerlink" title="五、VS Code 插件"></a>五、VS Code 插件</h3><ol>
+<li>VS Code 扩展市场搜索「Claude AI」（Anthropic 官方）</li>
+<li>安装后重启 VS Code</li>
+<li>右键代码选择「Ask Claude」即可使用</li>
+</ol>
+<h3 id="六、验证"><a href="#六、验证" class="headerlink" title="六、验证"></a>六、验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude</span><br></pre></td></tr></table></figure>
+
+<h3 id="七、官方参考链接"><a href="#七、官方参考链接" class="headerlink" title="七、官方参考链接"></a>七、官方参考链接</h3><table>
+<thead>
+<tr>
+<th>用途</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MiniMax Coding Plan 接入</td>
+<td><a target="_blank" rel="noopener" href="https://platform.minimaxi.com/docs/coding-plan/intro">https://platform.minimaxi.com/docs/coding-plan/intro</a></td>
+</tr>
+<tr>
+<td>Claude Code 接入配置</td>
+<td><a target="_blank" rel="noopener" href="https://platform.minimaxi.com/docs/coding-plan/claude-code">https://platform.minimaxi.com/docs/coding-plan/claude-code</a></td>
+</tr>
+<tr>
+<td>MCP 工具配置指南</td>
+<td><a target="_blank" rel="noopener" href="https://platform.minimaxi.com/docs/coding-plan/mcp-guide">https://platform.minimaxi.com/docs/coding-plan/mcp-guide</a></td>
+</tr>
+<tr>
+<td>Claude Code 官方文档</td>
+<td><a target="_blank" rel="noopener" href="https://docs.anthropic.com/zh-CN/docs/claude-code/overview">https://docs.anthropic.com/zh-CN/docs/claude-code/overview</a></td>
+</tr>
+<tr>
+<td>CC Switch 项目主页</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/farion1231/cc-switch">https://github.com/farion1231/cc-switch</a></td>
+</tr>
+</tbody></table>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2026年02月03日 15:29</p>
+        <p>原始链接： <a class="post-url" href="/2026/02/03/claude-code-minimax-tutorial/" title="无需代理安装配置 Claude Code + MiniMax M2.1 API教程">https://goodgan.github.io/2026/02/03/claude-code-minimax-tutorial/</a></p>
+        <footer>
+            <a href="https://goodgan.github.io">
+                <img src="/images/logo.png" alt="mrgan">
+                mrgan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://goodgan.github.io/2026/02/03/claude-code-minimax-tutorial/&title=《无需代理安装配置 Claude Code + MiniMax M2.1 API教程》 — 我的博客&pic=https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://goodgan.github.io/2026/02/03/claude-code-minimax-tutorial/&title=《无需代理安装配置 Claude Code + MiniMax M2.1 API教程》 — 我的博客&source=分享技术与生活" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://goodgan.github.io/2026/02/03/claude-code-minimax-tutorial/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《无需代理安装配置 Claude Code + MiniMax M2.1 API教程》 — 我的博客&url=https://goodgan.github.io/2026/02/03/claude-code-minimax-tutorial/&via=https://goodgan.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://goodgan.github.io/2026/02/03/claude-code-minimax-tutorial/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <div id="qrcode-container" style="display: flex; justify-content: center; align-items: center; min-height: 200px;"></div>
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/AI编程/" class="color5">AI编程</a>
+      
+    <a href="/tags/开发工具/" class="color5">开发工具</a>
+      
+    <a href="/tags/ClaudeCode/" class="color2">Claude Code</a>
+      
+    <a href="/tags/MiniMaxM2.1/" class="color3">MiniMax M2.1</a>
+      
+    <a href="/tags/MCP/" class="color4">MCP</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%9B%BD%E5%86%85%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE-claude-code-minimax-m2-1-api%E6%95%99%E7%A8%8B"><span class="post-toc-text">国内安装配置 Claude Code + MiniMax M2.1 API教程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="post-toc-text">一、环境准备</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-node-js-18"><span class="post-toc-text">1.1 Node.js 18+</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-minimax-coding-plan-api-%E5%AF%86%E9%92%A5"><span class="post-toc-text">1.2 MiniMax Coding Plan API 密钥</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85-claude-code"><span class="post-toc-text">二、安装 Claude Code</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%89%E3%80%81%E9%85%8D%E7%BD%AE-minimax-api"><span class="post-toc-text">三、配置 MiniMax API</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%96%B9%E5%BC%8F-1%EF%BC%9Acc-switch-%E5%8F%AF%E8%A7%86%E5%8C%96%E9%85%8D%E7%BD%AE%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="post-toc-text">方式 1：CC Switch 可视化配置（推荐）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%96%B9%E5%BC%8F-2%EF%BC%9A%E6%89%8B%E5%8A%A8%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="post-toc-text">方式 2：手动编辑配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%9B%9B%E3%80%81mcp-%E9%85%8D%E7%BD%AE"><span class="post-toc-text">四、MCP 配置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%BA%94%E3%80%81vs-code-%E6%8F%92%E4%BB%B6"><span class="post-toc-text">五、VS Code 插件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%85%AD%E3%80%81%E9%AA%8C%E8%AF%81"><span class="post-toc-text">六、验证</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%98%E6%96%B9%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="post-toc-text">七、官方参考链接</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2025/08/31/remote-ssh-windows/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Windows远程SSH多客户端连接指南</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2026 mrgan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="/js/vendor/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://goodgan.github.io",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">写作指南</a><a class="category-link" href="/categories/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/">学术工具</a><a class="category-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><a class="category-link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/AI/" style="font-size: 12px;">AI</a> <a href="/tags/AI%E7%BC%96%E7%A8%8B/" style="font-size: 12px;">AI编程</a> <a href="/tags/API%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">API服务</a> <a href="/tags/CLI/" style="font-size: 10px;">CLI</a> <a href="/tags/Claude-Code/" style="font-size: 10px;">Claude Code</a> <a href="/tags/Cloudflare/" style="font-size: 10px;">Cloudflare</a> <a href="/tags/Gemini/" style="font-size: 10px;">Gemini</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 12px;">GitHub</a> <a href="/tags/Google-Cloud/" style="font-size: 10px;">Google Cloud</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 12px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 10px;">Java Web</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MCP/" style="font-size: 10px;">MCP</a> <a href="/tags/MiniMax-M2-1/" style="font-size: 10px;">MiniMax M2.1</a> <a href="/tags/Mock%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">Mock数据</a> <a href="/tags/Namesilo/" style="font-size: 10px;">Namesilo</a> <a href="/tags/OpenSSH/" style="font-size: 10px;">OpenSSH</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SSH/" style="font-size: 14px;">SSH</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Spring-Boot/" style="font-size: 12px;">Spring Boot</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/Tailscale/" style="font-size: 10px;">Tailscale</a> <a href="/tags/VS-Code/" style="font-size: 14px;">VS Code</a> <a href="/tags/Vue/" style="font-size: 12px;">Vue</a> <a href="/tags/Vue-js/" style="font-size: 10px;">Vue.js</a> <a href="/tags/Web%E5%BC%80%E5%8F%91/" style="font-size: 12px;">Web开发</a> <a href="/tags/Windows/" style="font-size: 12px;">Windows</a> <a href="/tags/ZeroTier/" style="font-size: 10px;">ZeroTier</a> <a href="/tags/%E4%B8%B4%E6%97%B6%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">临时服务</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" style="font-size: 10px;">代码规范</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%BE%85%E5%8A%A9/" style="font-size: 10px;">代码辅助</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 10px;">内网穿透</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">写作技巧</a> <a href="/tags/%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">创作</a> <a href="/tags/%E5%88%9B%E6%84%8F%E6%9E%84%E6%80%9D/" style="font-size: 10px;">创意构思</a> <a href="/tags/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/" style="font-size: 12px;">前后端分离</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 14px;">前端开发</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 12px;">博客</a> <a href="/tags/%E5%8D%A0%E4%BD%8D%E5%9B%BE%E7%89%87/" style="font-size: 10px;">占位图片</a> <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 12px;">后端开发</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">团队协作</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 10px;">域名</a> <a href="/tags/%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF/" style="font-size: 10px;">多客户端</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" style="font-size: 16px;">学习路线</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">学术工具</a> <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" style="font-size: 10px;">安卓开发</a> <a href="/tags/%E5%B0%8F%E5%9B%A2%E9%98%9F/" style="font-size: 10px;">小团队</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E5%B0%8F%E8%AF%B4%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">小说创作</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 12px;">工具</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91/" style="font-size: 10px;">并行开发</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 18px;">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 10px;">开发流程</a> <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" style="font-size: 10px;">微信开发</a> <a href="/tags/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91/" style="font-size: 10px;">快速开发</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">接口协作</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">数据分析</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%B7%A5%E7%A8%8B/" style="font-size: 10px;">数据工程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/tags/%E6%B1%82%E8%81%8C%E6%8C%87%E5%8D%97/" style="font-size: 10px;">求职指南</a> <a href="/tags/%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">测试数据</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 10px;">生活</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95/" style="font-size: 10px;">研究方法</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" style="font-size: 12px;">移动开发</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">编程</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%95%88%E7%8E%87/" style="font-size: 10px;">编程效率</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%96%87%E5%AD%A6/" style="font-size: 10px;">网络文学</a> <a href="/tags/%E8%A7%92%E8%89%B2%E5%A1%91%E9%80%A0/" style="font-size: 10px;">角色塑造</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/" style="font-size: 10px;">论文写作</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E8%B5%84%E6%BA%90/" style="font-size: 10px;">设计资源</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%8F%91/" style="font-size: 14px;">远程开发</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">部署</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 12px;">项目管理</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/tools">
+                    <i class="fa fa-wrench"></i><span>AI工具</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/AI/" style="font-size: 12px;">AI</a> <a href="/tags/AI%E7%BC%96%E7%A8%8B/" style="font-size: 12px;">AI编程</a> <a href="/tags/API%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">API服务</a> <a href="/tags/CLI/" style="font-size: 10px;">CLI</a> <a href="/tags/Claude-Code/" style="font-size: 10px;">Claude Code</a> <a href="/tags/Cloudflare/" style="font-size: 10px;">Cloudflare</a> <a href="/tags/Gemini/" style="font-size: 10px;">Gemini</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 12px;">GitHub</a> <a href="/tags/Google-Cloud/" style="font-size: 10px;">Google Cloud</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 12px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 10px;">Java Web</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MCP/" style="font-size: 10px;">MCP</a> <a href="/tags/MiniMax-M2-1/" style="font-size: 10px;">MiniMax M2.1</a> <a href="/tags/Mock%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">Mock数据</a> <a href="/tags/Namesilo/" style="font-size: 10px;">Namesilo</a> <a href="/tags/OpenSSH/" style="font-size: 10px;">OpenSSH</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SSH/" style="font-size: 14px;">SSH</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Spring-Boot/" style="font-size: 12px;">Spring Boot</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/Tailscale/" style="font-size: 10px;">Tailscale</a> <a href="/tags/VS-Code/" style="font-size: 14px;">VS Code</a> <a href="/tags/Vue/" style="font-size: 12px;">Vue</a> <a href="/tags/Vue-js/" style="font-size: 10px;">Vue.js</a> <a href="/tags/Web%E5%BC%80%E5%8F%91/" style="font-size: 12px;">Web开发</a> <a href="/tags/Windows/" style="font-size: 12px;">Windows</a> <a href="/tags/ZeroTier/" style="font-size: 10px;">ZeroTier</a> <a href="/tags/%E4%B8%B4%E6%97%B6%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">临时服务</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" style="font-size: 10px;">代码规范</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%BE%85%E5%8A%A9/" style="font-size: 10px;">代码辅助</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 10px;">内网穿透</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">写作技巧</a> <a href="/tags/%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">创作</a> <a href="/tags/%E5%88%9B%E6%84%8F%E6%9E%84%E6%80%9D/" style="font-size: 10px;">创意构思</a> <a href="/tags/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/" style="font-size: 12px;">前后端分离</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 14px;">前端开发</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 12px;">博客</a> <a href="/tags/%E5%8D%A0%E4%BD%8D%E5%9B%BE%E7%89%87/" style="font-size: 10px;">占位图片</a> <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 12px;">后端开发</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">团队协作</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 10px;">域名</a> <a href="/tags/%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF/" style="font-size: 10px;">多客户端</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" style="font-size: 16px;">学习路线</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">学术工具</a> <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" style="font-size: 10px;">安卓开发</a> <a href="/tags/%E5%B0%8F%E5%9B%A2%E9%98%9F/" style="font-size: 10px;">小团队</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E5%B0%8F%E8%AF%B4%E5%88%9B%E4%BD%9C/" style="font-size: 10px;">小说创作</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 12px;">工具</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91/" style="font-size: 10px;">并行开发</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 18px;">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 10px;">开发流程</a> <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" style="font-size: 10px;">微信开发</a> <a href="/tags/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91/" style="font-size: 10px;">快速开发</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%8D%8F%E4%BD%9C/" style="font-size: 10px;">接口协作</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">数据分析</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%B7%A5%E7%A8%8B/" style="font-size: 10px;">数据工程</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/tags/%E6%B1%82%E8%81%8C%E6%8C%87%E5%8D%97/" style="font-size: 10px;">求职指南</a> <a href="/tags/%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" style="font-size: 10px;">测试数据</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 10px;">生活</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95/" style="font-size: 10px;">研究方法</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" style="font-size: 12px;">移动开发</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">编程</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%95%88%E7%8E%87/" style="font-size: 10px;">编程效率</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%96%87%E5%AD%A6/" style="font-size: 10px;">网络文学</a> <a href="/tags/%E8%A7%92%E8%89%B2%E5%A1%91%E9%80%A0/" style="font-size: 10px;">角色塑造</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/" style="font-size: 10px;">论文写作</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E8%B5%84%E6%BA%90/" style="font-size: 10px;">设计资源</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%8F%91/" style="font-size: 14px;">远程开发</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">部署</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 12px;">项目管理</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+  <script src="/js/vendor/particles.min.js"></script>
+  <div id="particles"></div>
+  
+<script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="/css/vendor/animate.min.css">
+  <script src="/js/vendor/scrollreveal.min.js"></script>
+  
+<script src="/js/animate.js"></script>
+
+
+
+  
+<script src="/js/pop-img.js"></script>
+
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+
+
+  
+<script src="/js/qrcode.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // 重写原有的微信分享点击事件，添加二维码生成逻辑
+      $('#wxFab').off('click').on('click', function() {
+        var wxShare = $('#wxShare');
+        var mask = $('.mask');
+        var shareUrl = window.location.href;
+        var qrcodeContainer = document.getElementById('qrcode-container');
+
+        // 显示弹窗
+        wxShare.addClass('in ready');
+        mask.addClass('in');
+
+        // 清空容器并生成二维码
+        qrcodeContainer.innerHTML = '';
+
+        try {
+          new QRCode(qrcodeContainer, {
+            text: shareUrl,
+            width: 200,
+            height: 200,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+          });
+          console.log('QR Code generated successfully for:', shareUrl);
+        } catch (e) {
+          console.error('QR Code generation failed:', e);
+          qrcodeContainer.innerHTML = '<p style="color: #666; text-align: center; padding: 50px;">二维码生成失败<br><small>' + e.message + '</small></p>';
+        }
+      });
+    });
+  </script>
+
+  </div>
+</body>
+</html>
