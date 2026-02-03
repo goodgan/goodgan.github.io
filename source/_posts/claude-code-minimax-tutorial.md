@@ -1,5 +1,5 @@
 ---
-title: 国内安装配置 Claude Code + MiniMax M2.1 API教程
+title: 无需代理安装配置 Claude Code + MiniMax M2.1 API教程
 date: 2026-02-03 12:00:00
 categories: 开发工具
 tags:
