@@ -85,7 +85,7 @@ npm install -g @anthropic-ai/claude-code --registry=https://registry.npmmirror.c
 
 参考 MiniMax 官方 MCP 文档：https://platform.minimaxi.com/docs/coding-plan/mcp-guide
 
-重要：配置这个minimax m2.1 才具备图片理解和网络搜索功能
+重要：配置MCP后 minimax m2.1 才具备图片理解和网络搜索功能。
 
 ## 五、VS Code 插件
 

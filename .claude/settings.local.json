@@ -9,7 +9,8 @@
       "Bash(findstr :4000)",
       "Bash(powershell -Command:*)",
       "mcp__MiniMax__understand_image",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(git push:*)"
     ]
   }
 }
